@@ -7,13 +7,13 @@
     <style>
       @font-face {
         font-family: "Gilroy";
-        src: url("../assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
+        src: url("assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
         font-weight: 800;
       }
 
       @font-face {
         font-family: "Gilroy";
-        src: url("../assets/fonts/Gilroy-Light.otf") format("opentype");
+        src: url("assets/fonts/Gilroy-Light.otf") format("opentype");
         font-weight: 300;
       }
 
@@ -298,6 +298,15 @@
         margin: 8px 0 12px;
       }
 
+      .checklist-subtitle {
+        margin: 4px 0 12px;
+        color: var(--blue);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: clamp(14px, 4vw, 18px);
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
       .checklist-screen .primary-button {
         flex: 0 0 auto;
         margin-top: 24px;
@@ -506,19 +515,8 @@
 
       <section class="screen checklist-screen" data-screen="downsides">
         <h1 class="headline compact" data-downside-title>Drinking has its downsides. How does it affect you?</h1>
-        <div class="checklist" data-checklist>
-          <button class="check-row" type="button"><span class="ring"></span><span>Poor sleep</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Low energy</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Brain fog</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Trouble focusing</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Anxiety or low mood</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Hangovers</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Regret</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Relationship tension</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Lost time or productivity</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Concerns about my health</span></button>
-          <button class="check-row" type="button"><span class="ring"></span><span>Feeling less in control</span></button>
-        </div>
+        <p class="checklist-subtitle" data-downside-subtitle>Pick all that apply.</p>
+        <div class="checklist" data-checklist></div>
         <button class="primary-button" type="button" data-next="willpower">continue</button>
       </section>
 
@@ -551,13 +549,35 @@
       const screens = [...document.querySelectorAll(".screen")];
       const backArrow = document.querySelector(".back-arrow");
       const downsideTitle = document.querySelector("[data-downside-title]");
+      const downsideSubtitle = document.querySelector("[data-downside-subtitle]");
+      const checklist = document.querySelector("[data-checklist]");
       const goalButtons = [...document.querySelectorAll("[data-goal]")];
-      const checkRows = [...document.querySelectorAll(".check-row")];
       const radioRows = [...document.querySelectorAll(".radio-row")];
       const storageKey = "see-alcohol-onboarding-html-state";
+      const checklistOptions = {
+        less: [
+          "I want to enjoy my social life without drinking too much",
+          "I want improved health",
+          "I want fewer bad mornings/reduce brain fog",
+          "I want to sleep better",
+          "I want to lose weight/cut down on calories",
+          "Drinking has become far too automatic for me",
+          "I want alcohol to take up less space in my life",
+        ],
+        stop: [
+          "I want my health back",
+          "I am tired of bad mornings",
+          "I am tired of anxiety, shame, or regret",
+          "Once I start I cannot stop",
+          "Alcohol is hurting my relationships",
+          "Alcohol is affecting my work or reputation",
+        ],
+      };
       let active = "welcome";
       let goal = null;
       let historyStack = [];
+      let checkRows = [];
+      let selectedChecksByGoal = { less: [], stop: [] };
 
       function readSavedState() {
         try {
@@ -588,10 +608,11 @@
       }
 
       function updateDownsideTitle() {
-        downsideTitle.textContent =
-          goal === "stop"
-            ? "Drinking has its downsides. Why do you want to stop?"
-            : "Drinking has its downsides. How does it affect you?";
+        const isStop = goal === "stop";
+        downsideTitle.textContent = isStop
+          ? "Do you want to stop completely?"
+          : "Why do you want to drink less?";
+        downsideSubtitle.textContent = isStop ? "Pick any that apply." : "Pick all that apply.";
       }
 
       function syncGoalButtons() {
@@ -600,10 +621,43 @@
         });
       }
 
-      function snapshotState() {
-        const selectedChecks = checkRows
+      function checklistKey() {
+        return goal === "stop" ? "stop" : "less";
+      }
+
+      function selectedChecklistIndexes() {
+        return checkRows
           .map((row, index) => (row.classList.contains("is-selected") ? index : -1))
           .filter((index) => index >= 0);
+      }
+
+      function bindCheckRows() {
+        checkRows = [...checklist.querySelectorAll(".check-row")];
+        checkRows.forEach((row) => {
+          row.addEventListener("click", () => {
+            row.classList.toggle("is-selected");
+            selectedChecksByGoal[checklistKey()] = selectedChecklistIndexes();
+            saveState();
+          });
+        });
+      }
+
+      function renderChecklist() {
+        const key = checklistKey();
+        checklist.innerHTML = checklistOptions[key]
+          .map(
+            (label, index) => `
+              <button class="check-row${selectedChecksByGoal[key].includes(index) ? " is-selected" : ""}" type="button">
+                <span class="ring"></span><span>${label}</span>
+              </button>
+            `
+          )
+          .join("");
+        bindCheckRows();
+      }
+
+      function snapshotState() {
+        selectedChecksByGoal[checklistKey()] = selectedChecklistIndexes();
         const selectedRadio = radioRows.findIndex((row) => row.classList.contains("is-selected"));
         const scrollTops = {};
         screens.forEach((screen) => {
@@ -614,7 +668,7 @@
           active,
           goal,
           historyStack,
-          selectedChecks,
+          selectedChecksByGoal,
           selectedRadio,
           scrollTops,
         };
@@ -659,10 +713,13 @@
           historyStack = inferredHistory(active);
         }
 
-        if (Array.isArray(savedState.selectedChecks)) {
-          checkRows.forEach((row, index) => {
-            row.classList.toggle("is-selected", savedState.selectedChecks.includes(index));
-          });
+        if (savedState.selectedChecksByGoal && typeof savedState.selectedChecksByGoal === "object") {
+          selectedChecksByGoal = {
+            less: Array.isArray(savedState.selectedChecksByGoal.less) ? savedState.selectedChecksByGoal.less : [],
+            stop: Array.isArray(savedState.selectedChecksByGoal.stop) ? savedState.selectedChecksByGoal.stop : [],
+          };
+        } else if (Array.isArray(savedState.selectedChecks)) {
+          selectedChecksByGoal[checklistKey()] = savedState.selectedChecks;
         }
 
         radioRows.forEach((row, index) => {
@@ -671,6 +728,7 @@
 
         updateDownsideTitle();
         syncGoalButtons();
+        renderChecklist();
         activateScreen(active, { skipSave: true });
 
         window.requestAnimationFrame(() => {
@@ -719,16 +777,10 @@
           goal = button.dataset.goal;
           syncGoalButtons();
           updateDownsideTitle();
+          renderChecklist();
           saveState();
 
           window.setTimeout(() => showScreen(goal === "stop" ? "benefits" : "social"), 120);
-        });
-      });
-
-      checkRows.forEach((row) => {
-        row.addEventListener("click", () => {
-          row.classList.toggle("is-selected");
-          saveState();
         });
       });
 
