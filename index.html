@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Alcohol Onboarding HTML Flow</title>
+    <style>
+      @font-face {
+        font-family: "Gilroy";
+        src: url("../assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
+        font-weight: 800;
+      }
+
+      @font-face {
+        font-family: "Gilroy";
+        src: url("../assets/fonts/Gilroy-Light.otf") format("opentype");
+        font-weight: 300;
+      }
+
+      @font-face {
+        font-family: "Public Sans";
+        src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+      }
+
+      :root {
+        --blue: #3157c9;
+        --dark: #252323;
+        --yellow: #fad250;
+        --gold: #e8a522;
+        --light: #fff8df;
+        --glass: #eff3f6;
+        --iphone-air-width: 420;
+        --iphone-air-height: 912;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: #050505;
+        color: var(--dark);
+        font-family: "Public Sans", system-ui, sans-serif;
+      }
+
+      button {
+        border: 0;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        background: transparent;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .app {
+        position: relative;
+        width: min(
+          100vw,
+          420px,
+          calc(100svh * var(--iphone-air-width) / var(--iphone-air-height))
+        );
+        aspect-ratio: var(--iphone-air-width) / var(--iphone-air-height);
+        overflow: hidden;
+        isolation: isolate;
+        background-color: var(--yellow);
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: max(28px, env(safe-area-inset-top)) 24px max(20px, env(safe-area-inset-bottom));
+        background-color: var(--yellow);
+        background-image: url("assets/images/background_yellow.png");
+        background-position: center;
+        background-size: cover;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(20px);
+        transition: opacity 240ms ease, transform 240ms ease;
+      }
+
+      .screen.is-active {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateX(0);
+      }
+
+      .screen.is-leaving {
+        transform: translateX(-20px);
+      }
+
+      .back-arrow {
+        position: absolute;
+        top: max(18px, env(safe-area-inset-top));
+        left: 18px;
+        z-index: 5;
+        display: none;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        color: var(--dark);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1;
+        opacity: 0.72;
+      }
+
+      .back-arrow.is-visible {
+        display: flex;
+      }
+
+      .content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .top-copy {
+        justify-content: flex-start;
+        padding-top: 18vh;
+      }
+
+      .headline {
+        margin: 0;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: clamp(41px, 12.3vw, 56px);
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .headline.medium {
+        font-size: clamp(34px, 10vw, 46px);
+        line-height: 1.03;
+      }
+
+      .headline.compact {
+        font-size: clamp(30px, 8.8vw, 40px);
+        line-height: 1.08;
+      }
+
+      .body {
+        max-width: 320px;
+        margin: 18px 0 0;
+        color: var(--blue);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: clamp(14px, 4.1vw, 18px);
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .body.dark {
+        color: var(--dark);
+      }
+
+      .body + .body {
+        margin-top: 18px;
+      }
+
+      .primary-button {
+        width: 100%;
+        min-height: 58px;
+        margin-top: auto;
+        border-radius: 999px;
+        background: var(--blue);
+        box-shadow: 0 6px 10px rgba(37, 35, 35, 0.26);
+        color: white;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: clamp(15px, 4vw, 18px);
+        font-weight: 800;
+      }
+
+      .choice-stack {
+        display: grid;
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .choice {
+        display: grid;
+        grid-template-columns: 78px 1fr;
+        align-items: center;
+        gap: 18px;
+        min-height: 80px;
+        border-radius: 14px;
+        padding: 8px 14px 8px 10px;
+        text-align: left;
+        transition: background 160ms ease, box-shadow 160ms ease, color 160ms ease;
+      }
+
+      .choice.is-selected,
+      .choice:active {
+        background: var(--blue);
+        box-shadow: 0 5px 10px rgba(37, 35, 35, 0.26);
+        color: white;
+      }
+
+      .choice-icon {
+        display: grid;
+        width: 78px;
+        height: 78px;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .choice-icon img {
+        display: block;
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+      }
+
+      .choice-label {
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: clamp(21px, 5.8vw, 27px);
+        font-weight: 800;
+        line-height: 1.08;
+      }
+
+      .art {
+        display: block;
+        width: 100%;
+        object-fit: contain;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .benefits-art {
+        max-width: 285px;
+        margin: 0 auto;
+      }
+
+      .toast-art {
+        width: min(68vw, 250px);
+        margin: 0 auto;
+      }
+
+      .branch-copy {
+        margin: 0 0 8px;
+      }
+
+      .branch-flow {
+        justify-content: center;
+        gap: clamp(18px, 4.8vh, 36px);
+      }
+
+      .branch-copy .body {
+        margin-top: 0;
+      }
+
+      .checklist-screen {
+        gap: 10px;
+        overflow-y: auto;
+        padding-top: max(100px, env(safe-area-inset-top));
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+      }
+
+      .checklist-screen::-webkit-scrollbar {
+        display: none;
+      }
+
+      .checklist {
+        display: grid;
+        gap: 9px;
+        margin: 8px 0 12px;
+      }
+
+      .checklist-screen .primary-button {
+        flex: 0 0 auto;
+        margin-top: 24px;
+      }
+
+      .check-row {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        align-items: center;
+        gap: 10px;
+        margin-left: -14px;
+        min-height: 32px;
+        border-radius: 8px;
+        padding: 4px 8px 4px 14px;
+        text-align: left;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: clamp(15px, 4.1vw, 19px);
+        font-weight: 800;
+        line-height: 1.04;
+      }
+
+      .check-row .ring {
+        display: grid;
+        width: 25px;
+        height: 25px;
+        place-items: center;
+        border: 3px solid var(--blue);
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 2px 4px rgba(37, 35, 35, 0.18);
+      }
+
+      .check-row .ring::after {
+        content: "";
+        width: 11px;
+        height: 6px;
+        border-bottom: 3px solid currentColor;
+        border-left: 3px solid currentColor;
+        color: white;
+        opacity: 0;
+        transform: rotate(-45deg) translate(1px, -1px);
+      }
+
+      .check-row.is-selected {
+        background: var(--blue);
+        color: white;
+        box-shadow: 0 4px 8px rgba(37, 35, 35, 0.22);
+      }
+
+      .check-row.is-selected .ring {
+        border-color: white;
+        background: transparent;
+        color: white;
+      }
+
+      .check-row.is-selected .ring::after {
+        opacity: 1;
+      }
+
+      .radio-list {
+        display: grid;
+        gap: 16px;
+        margin-top: 26px;
+      }
+
+      .radio-row {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        align-items: center;
+        gap: 12px;
+        min-height: 40px;
+        border-radius: 8px;
+        padding: 3px 8px 3px 0;
+        text-align: left;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: clamp(18px, 5vw, 24px);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .radio-row .ring {
+        width: 25px;
+        height: 25px;
+        border: 3px solid var(--blue);
+        border-radius: 50%;
+        background: var(--light);
+      }
+
+      .radio-row.is-selected {
+        background: var(--blue);
+        color: white;
+      }
+
+      .radio-row.is-selected .ring {
+        display: grid;
+        place-items: center;
+        border-color: white;
+        background: var(--blue);
+      }
+
+      .radio-row.is-selected .ring::after {
+        content: "";
+        width: 11px;
+        height: 6px;
+        border-bottom: 3px solid white;
+        border-left: 3px solid white;
+        transform: rotate(-45deg) translate(1px, -1px);
+      }
+
+      @media (max-height: 730px) {
+        .screen {
+          gap: 12px;
+          padding-right: 22px;
+          padding-left: 22px;
+        }
+
+        .top-copy {
+          padding-top: 13vh;
+        }
+
+        .headline {
+          font-size: clamp(36px, 11vw, 48px);
+        }
+
+        .headline.medium {
+          font-size: clamp(31px, 9.4vw, 40px);
+        }
+
+        .body {
+          margin-top: 12px;
+        }
+
+        .choice-stack {
+          gap: 16px;
+        }
+
+        .toast-art {
+          width: min(60vw, 218px);
+        }
+
+        .benefits-art {
+          margin: 0 auto;
+        }
+
+        .primary-button {
+          min-height: 52px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <button class="back-arrow" type="button" aria-label="Go back">‹</button>
+
+      <section class="screen is-active" data-screen="welcome">
+        <div class="content top-copy">
+          <h1 class="headline">Get your life back from alcohol.</h1>
+          <p class="body">If drinking is taking too much from you, you’re in the right place.</p>
+        </div>
+        <button class="primary-button" type="button" data-next="goal">continue</button>
+      </section>
+
+      <section class="screen" data-screen="goal">
+        <div class="content">
+          <h1 class="headline">Which<br />are you?</h1>
+          <div class="choice-stack">
+            <button class="choice" type="button" data-goal="less">
+              <span class="choice-icon">
+                <img src="assets/images/line_chart.png" alt="" />
+              </span>
+              <span class="choice-label">I want to drink less</span>
+            </button>
+            <button class="choice" type="button" data-goal="stop">
+              <span class="choice-icon">
+                <img src="assets/images/on-off_switch.png" alt="" />
+              </span>
+              <span class="choice-label">I want to stop entirely</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="benefits">
+        <div class="content branch-flow">
+          <h1 class="headline compact">A life without alcohol changes a lot about you</h1>
+          <img class="art benefits-art" src="assets/images/life_benefits_arc.png" alt="" />
+          <div class="branch-copy">
+            <p class="body dark">You’ll sleep better, have more energy, and can repair relationships with loved ones.</p>
+            <p class="body dark">You’ll think more clearly, focus better, and experience improved memory, too.</p>
+          </div>
+        </div>
+        <button class="primary-button" type="button" data-next="downsides">continue</button>
+      </section>
+
+      <section class="screen" data-screen="social">
+        <div class="content branch-flow">
+          <h1 class="headline medium">That is great.</h1>
+          <img class="art toast-art" src="assets/images/champagne_toast.png" alt="" />
+          <div class="branch-copy">
+            <p class="body dark">Alcohol is a powerful social lubricant. Parties, celebrations, events with friends and family.</p>
+            <p class="body dark">Drink responsibly — just less often, with less brain fog, less regret, and better health.</p>
+          </div>
+        </div>
+        <button class="primary-button" type="button" data-next="downsides">continue</button>
+      </section>
+
+      <section class="screen checklist-screen" data-screen="downsides">
+        <h1 class="headline compact" data-downside-title>Drinking has its downsides. How does it affect you?</h1>
+        <div class="checklist" data-checklist>
+          <button class="check-row" type="button"><span class="ring"></span><span>Poor sleep</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Low energy</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Brain fog</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Trouble focusing</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Anxiety or low mood</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Hangovers</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Regret</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Relationship tension</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Lost time or productivity</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Concerns about my health</span></button>
+          <button class="check-row" type="button"><span class="ring"></span><span>Feeling less in control</span></button>
+        </div>
+        <button class="primary-button" type="button" data-next="willpower">continue</button>
+      </section>
+
+      <section class="screen" data-screen="willpower">
+        <div class="content top-copy">
+          <h1 class="headline medium">It’s Not About Willpower</h1>
+          <p class="body">Trying harder doesn’t always work, but you can access the power of choice.</p>
+        </div>
+        <button class="primary-button" type="button" data-next="drinks">Let’s find that!</button>
+      </section>
+
+      <section class="screen" data-screen="drinks">
+        <div class="content">
+          <h1 class="headline compact">But first...<br />In a typical week, how many alcoholic drinks do you have?</h1>
+          <div class="radio-list">
+            <button class="radio-row" type="button"><span class="ring"></span><span>0</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>1–3</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>4–7</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>8–14</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>15–24</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>25–49</span></button>
+            <button class="radio-row" type="button"><span class="ring"></span><span>50+</span></button>
+          </div>
+        </div>
+        <button class="primary-button" type="button">continue</button>
+      </section>
+    </main>
+
+    <script>
+      const screens = [...document.querySelectorAll(".screen")];
+      const backArrow = document.querySelector(".back-arrow");
+      const downsideTitle = document.querySelector("[data-downside-title]");
+      const goalButtons = [...document.querySelectorAll("[data-goal]")];
+      const checkRows = [...document.querySelectorAll(".check-row")];
+      const radioRows = [...document.querySelectorAll(".radio-row")];
+      const storageKey = "see-alcohol-onboarding-html-state";
+      let active = "welcome";
+      let goal = null;
+      let historyStack = [];
+
+      function readSavedState() {
+        try {
+          return JSON.parse(window.localStorage.getItem(storageKey)) || {};
+        } catch {
+          return {};
+        }
+      }
+
+      function screenExists(name) {
+        return screens.some((screen) => screen.dataset.screen === name);
+      }
+
+      function inferredHistory(screenName) {
+        if (screenName === "welcome") return [];
+        if (screenName === "goal") return ["welcome"];
+        if (screenName === "benefits" || screenName === "social") return ["welcome", "goal"];
+        if (screenName === "downsides") {
+          return ["welcome", "goal", goal === "less" ? "social" : "benefits"];
+        }
+        if (screenName === "willpower") {
+          return ["welcome", "goal", goal === "less" ? "social" : "benefits", "downsides"];
+        }
+        if (screenName === "drinks") {
+          return ["welcome", "goal", goal === "less" ? "social" : "benefits", "downsides", "willpower"];
+        }
+        return ["welcome"];
+      }
+
+      function updateDownsideTitle() {
+        downsideTitle.textContent =
+          goal === "stop"
+            ? "Drinking has its downsides. Why do you want to stop?"
+            : "Drinking has its downsides. How does it affect you?";
+      }
+
+      function syncGoalButtons() {
+        goalButtons.forEach((choice) => {
+          choice.classList.toggle("is-selected", choice.dataset.goal === goal);
+        });
+      }
+
+      function snapshotState() {
+        const selectedChecks = checkRows
+          .map((row, index) => (row.classList.contains("is-selected") ? index : -1))
+          .filter((index) => index >= 0);
+        const selectedRadio = radioRows.findIndex((row) => row.classList.contains("is-selected"));
+        const scrollTops = {};
+        screens.forEach((screen) => {
+          if (screen.scrollTop > 0) scrollTops[screen.dataset.screen] = screen.scrollTop;
+        });
+
+        return {
+          active,
+          goal,
+          historyStack,
+          selectedChecks,
+          selectedRadio,
+          scrollTops,
+        };
+      }
+
+      function saveState() {
+        try {
+          window.localStorage.setItem(storageKey, JSON.stringify(snapshotState()));
+          window.history.replaceState(null, "", `#${active}`);
+        } catch {
+          // The prototype should keep working even if storage is unavailable.
+        }
+      }
+
+      function activateScreen(name, options = {}) {
+        const next = document.querySelector(`.screen[data-screen="${name}"]`);
+        if (!next) return;
+
+        screens.forEach((screen) => {
+          screen.classList.remove("is-active", "is-leaving");
+        });
+        next.classList.add("is-active");
+        active = name;
+        backArrow.classList.toggle("is-visible", historyStack.length > 0);
+
+        if (!options.skipSave) {
+          saveState();
+        }
+      }
+
+      function restoreState() {
+        const savedState = readSavedState();
+        const hashScreen = window.location.hash.replace("#", "");
+        const savedActive = screenExists(hashScreen) ? hashScreen : savedState.active;
+        active = screenExists(savedActive) ? savedActive : "welcome";
+        goal = savedState.goal === "stop" || savedState.goal === "less" ? savedState.goal : null;
+        historyStack = Array.isArray(savedState.historyStack)
+          ? savedState.historyStack.filter(screenExists)
+          : [];
+
+        if (active !== "welcome" && historyStack.length === 0) {
+          historyStack = inferredHistory(active);
+        }
+
+        if (Array.isArray(savedState.selectedChecks)) {
+          checkRows.forEach((row, index) => {
+            row.classList.toggle("is-selected", savedState.selectedChecks.includes(index));
+          });
+        }
+
+        radioRows.forEach((row, index) => {
+          row.classList.toggle("is-selected", index === savedState.selectedRadio);
+        });
+
+        updateDownsideTitle();
+        syncGoalButtons();
+        activateScreen(active, { skipSave: true });
+
+        window.requestAnimationFrame(() => {
+          const activeScreen = document.querySelector(`.screen[data-screen="${active}"]`);
+          activeScreen.scrollTop = savedState.scrollTops?.[active] || 0;
+        });
+      }
+
+      function showScreen(name, options = {}) {
+        const current = document.querySelector(`.screen[data-screen="${active}"]`);
+        const next = document.querySelector(`.screen[data-screen="${name}"]`);
+        if (!next || next === current) return;
+
+        if (!options.replaceHistory) {
+          historyStack.push(active);
+        }
+
+        current?.classList.add("is-leaving");
+        screens.forEach((screen) => screen.classList.remove("is-active"));
+        next.classList.add("is-active");
+
+        window.setTimeout(() => {
+          current?.classList.remove("is-leaving");
+        }, 260);
+
+        active = name;
+        backArrow.classList.toggle("is-visible", historyStack.length > 0);
+        saveState();
+      }
+
+      backArrow.addEventListener("click", () => {
+        const previous = historyStack.pop();
+        if (previous) {
+          showScreen(previous, { replaceHistory: true });
+        }
+        backArrow.classList.toggle("is-visible", historyStack.length > 0);
+        saveState();
+      });
+
+      document.querySelectorAll("[data-next]").forEach((button) => {
+        button.addEventListener("click", () => showScreen(button.dataset.next));
+      });
+
+      goalButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          goal = button.dataset.goal;
+          syncGoalButtons();
+          updateDownsideTitle();
+          saveState();
+
+          window.setTimeout(() => showScreen(goal === "stop" ? "benefits" : "social"), 120);
+        });
+      });
+
+      checkRows.forEach((row) => {
+        row.addEventListener("click", () => {
+          row.classList.toggle("is-selected");
+          saveState();
+        });
+      });
+
+      radioRows.forEach((row) => {
+        row.addEventListener("click", () => {
+          radioRows.forEach((option) => {
+            option.classList.toggle("is-selected", option === row);
+          });
+          saveState();
+        });
+      });
+
+      screens.forEach((screen) => {
+        screen.addEventListener("scroll", saveState, { passive: true });
+      });
+
+      restoreState();
+    </script>
+  </body>
+</html>
