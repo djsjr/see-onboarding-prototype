@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alcohol Onboarding Flow Overview</title>
+    <style>
+      @font-face {
+        font-family: "Gilroy";
+        src: url("assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
+        font-weight: 800;
+      }
+
+      @font-face {
+        font-family: "Public Sans";
+        src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+      }
+
+      :root {
+        --blue: #3157c9;
+        --dark: #252323;
+        --yellow: #fad250;
+        --gold: #e8a522;
+        --light: #fff8df;
+        --scale: 0.43;
+        --phone-width: 420px;
+        --phone-height: 912px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #050505;
+        color: white;
+        font-family: "Public Sans", system-ui, sans-serif;
+      }
+
+      .overview-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 24px;
+        background: rgba(5, 5, 5, 0.88);
+        backdrop-filter: blur(14px);
+      }
+
+      .overview-header h1 {
+        margin: 0;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: 24px;
+        line-height: 1;
+      }
+
+      .overview-header a {
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+        opacity: 0.74;
+      }
+
+      .board {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 42px 34px;
+        padding: 26px 30px 56px;
+      }
+
+      .artboard-card {
+        width: calc(var(--phone-width) * var(--scale));
+      }
+
+      .artboard-label {
+        min-height: 22px;
+        margin: 0 0 8px;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .phone-crop {
+        width: calc(var(--phone-width) * var(--scale));
+        height: calc(var(--phone-height) * var(--scale));
+        overflow: hidden;
+        background: var(--yellow);
+      }
+
+      .phone {
+        position: relative;
+        width: var(--phone-width);
+        height: var(--phone-height);
+        overflow: hidden;
+        transform: scale(var(--scale));
+        transform-origin: top left;
+        background: var(--yellow);
+      }
+
+      button {
+        border: 0;
+        padding: 0;
+        color: inherit;
+        font: inherit;
+        background: transparent;
+      }
+
+      .screen {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        padding: 28px 24px 20px;
+        overflow: hidden;
+        background-color: var(--yellow);
+        background-image: url("assets/images/background_yellow.png");
+        background-position: center;
+        background-size: cover;
+      }
+
+      .content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .top-copy {
+        justify-content: flex-start;
+        padding-top: 18vh;
+      }
+
+      .welcome-copy {
+        justify-content: center;
+        padding-top: 8vh;
+      }
+
+      .headline {
+        margin: 0;
+        color: var(--dark);
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: 50px;
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .headline.medium {
+        font-size: 42px;
+        line-height: 1.03;
+      }
+
+      .headline.compact {
+        font-size: 36px;
+        line-height: 1.08;
+      }
+
+      .body {
+        max-width: 320px;
+        margin: 18px 0 0;
+        color: var(--blue);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .body.dark {
+        color: var(--dark);
+      }
+
+      .primary-button {
+        width: 100%;
+        min-height: 58px;
+        margin-top: auto;
+        border-radius: 999px;
+        background: var(--blue);
+        box-shadow: 0 6px 10px rgba(37, 35, 35, 0.26);
+        color: white;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .choice-stack {
+        display: grid;
+        gap: 24px;
+        margin-top: 32px;
+      }
+
+      .choice {
+        display: grid;
+        grid-template-columns: 78px 1fr;
+        align-items: center;
+        gap: 18px;
+        min-height: 80px;
+        border-radius: 14px;
+        padding: 8px 14px 8px 10px;
+        text-align: left;
+      }
+
+      .choice.is-selected {
+        background: var(--blue);
+        box-shadow: 0 5px 10px rgba(37, 35, 35, 0.26);
+        color: white;
+      }
+
+      .choice-icon {
+        display: grid;
+        width: 78px;
+        height: 78px;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .choice-icon img {
+        display: block;
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+      }
+
+      .choice-label {
+        color: var(--dark);
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: 27px;
+        font-weight: 800;
+        line-height: 1.08;
+      }
+
+      .choice.is-selected .choice-label {
+        color: white;
+      }
+
+      .art {
+        display: block;
+        width: 100%;
+        object-fit: contain;
+      }
+
+      .benefits-art {
+        max-width: 285px;
+        margin: 0 auto;
+      }
+
+      .toast-art {
+        width: min(68vw, 250px);
+        margin: 0 auto;
+      }
+
+      .willpower-art {
+        width: min(82vw, 320px);
+        margin: 0 auto;
+      }
+
+      .branch-flow {
+        justify-content: center;
+        gap: clamp(18px, 4.8vh, 36px);
+      }
+
+      .branch-copy {
+        margin: 0 0 8px;
+      }
+
+      .branch-copy .body {
+        margin-top: 0;
+      }
+
+      .branch-copy .body + .body {
+        margin-top: 1.2em;
+      }
+
+      .checklist-screen {
+        gap: 10px;
+        padding: 100px 34px 20px;
+      }
+
+      .checklist,
+      .radio-list {
+        display: grid;
+        gap: 14px;
+        margin: 8px 0 12px;
+      }
+
+      .checklist-subtitle {
+        margin: 4px 0 12px;
+        color: var(--blue);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .check-row,
+      .radio-row {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        align-items: center;
+        gap: 10px;
+        margin-left: -10px;
+        min-height: 32px;
+        border-radius: 8px;
+        padding: 4px 10px;
+        color: var(--dark);
+        text-align: left;
+        font-family: "Gilroy", system-ui, sans-serif;
+        font-size: 19px;
+        font-weight: 800;
+        line-height: 1.04;
+      }
+
+      .ring {
+        display: grid;
+        width: 25px;
+        height: 25px;
+        place-items: center;
+        border: 3px solid var(--blue);
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 2px 4px rgba(37, 35, 35, 0.18);
+      }
+
+      .ring::after {
+        content: "";
+        width: 11px;
+        height: 6px;
+        border-bottom: 3px solid currentColor;
+        border-left: 3px solid currentColor;
+        color: white;
+        opacity: 0;
+        transform: rotate(-45deg) translate(1px, -1px);
+      }
+
+      .is-selected {
+        background: var(--blue);
+        color: white;
+        box-shadow: 0 4px 8px rgba(37, 35, 35, 0.22);
+      }
+
+      .is-selected .ring {
+        border-color: white;
+        color: white;
+      }
+
+      .is-selected .ring::after {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="overview-header">
+      <h1>Onboarding Flow Overview</h1>
+      <a href="index.html">Interactive flow</a>
+    </header>
+    <main class="board" data-board></main>
+
+    <script src="flow-data.js"></script>
+    <script>
+      const flow = window.SEE_ONBOARDING_FLOW;
+      const board = document.querySelector("[data-board]");
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function paragraphs(items) {
+        return items.map((text) => `<p class="body dark">${escapeHtml(text)}</p>`).join("");
+      }
+
+      function button(label) {
+        return `<button class="primary-button" type="button">${escapeHtml(label)}</button>`;
+      }
+
+      function renderWelcome() {
+        const data = flow.screens.welcome;
+        return `
+          <section class="screen">
+            <div class="content top-copy welcome-copy">
+              <h1 class="headline">${escapeHtml(data.headline)}</h1>
+              <p class="body">${escapeHtml(data.body)}</p>
+            </div>
+            ${button(data.button)}
+          </section>
+        `;
+      }
+
+      function renderGoal() {
+        const data = flow.screens.goal;
+        return `
+          <section class="screen">
+            <div class="content">
+              <h1 class="headline">${data.headlineLines.map(escapeHtml).join("<br />")}</h1>
+              <div class="choice-stack">
+                ${data.choices
+                  .map(
+                    (choice, index) => `
+                      <button class="choice${index === 0 ? " is-selected" : ""}" type="button">
+                        <span class="choice-icon"><img src="${flow.assets[choice.imageKey]}" alt="" /></span>
+                        <span class="choice-label">${escapeHtml(choice.label)}</span>
+                      </button>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function renderBranch(screenName) {
+        const data = flow.screens[screenName];
+        return `
+          <section class="screen">
+            <div class="content branch-flow">
+              <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
+              <img class="art ${data.imageClass}" src="${flow.assets[data.imageKey]}" alt="" />
+              <div class="branch-copy">${paragraphs(data.body)}</div>
+            </div>
+            ${button(data.button)}
+          </section>
+        `;
+      }
+
+      function renderDownsides(goal) {
+        const data = flow.screens.downsides;
+        return `
+          <section class="screen checklist-screen">
+            <h1 class="headline compact">${escapeHtml(data.title[goal])}</h1>
+            <p class="checklist-subtitle">${escapeHtml(data.subtitle[goal])}</p>
+            <div class="checklist">
+              ${data.options[goal]
+                .map(
+                  (label, index) => `
+                    <button class="check-row${index === 1 ? " is-selected" : ""}" type="button">
+                      <span class="ring"></span><span>${escapeHtml(label)}</span>
+                    </button>
+                  `
+                )
+                .join("")}
+            </div>
+            ${button(data.button)}
+          </section>
+        `;
+      }
+
+      function renderDrinks() {
+        const data = flow.screens.drinks;
+        return `
+          <section class="screen checklist-screen">
+            <h1 class="headline compact">${escapeHtml(data.headline)}</h1>
+            <div class="radio-list">
+              ${data.options
+                .map(
+                  (label, index) => `
+                    <button class="radio-row${index === 1 ? " is-selected" : ""}" type="button">
+                      <span class="ring"></span><span>${escapeHtml(label)}</span>
+                    </button>
+                  `
+                )
+                .join("")}
+            </div>
+            ${button(data.button)}
+          </section>
+        `;
+      }
+
+      function renderScreen(item) {
+        if (item.screen === "welcome") return renderWelcome();
+        if (item.screen === "goal") return renderGoal();
+        if (item.screen === "social" || item.screen === "benefits" || item.screen === "willpower") {
+          return renderBranch(item.screen);
+        }
+        if (item.screen === "downsides") return renderDownsides(item.goal);
+        if (item.screen === "drinks") return renderDrinks();
+        return "";
+      }
+
+      board.innerHTML = flow.overview
+        .map(
+          (item) => `
+            <article class="artboard-card">
+              <p class="artboard-label">${escapeHtml(item.label)}</p>
+              <div class="phone-crop">
+                <div class="phone">${renderScreen(item)}</div>
+              </div>
+            </article>
+          `
+        )
+        .join("");
+    </script>
+  </body>
+</html>

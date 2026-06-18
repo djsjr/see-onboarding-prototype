@@ -500,39 +500,74 @@
       </section>
     </main>
 
+    <script src="flow-data.js"></script>
     <script>
+      const flow = window.SEE_ONBOARDING_FLOW;
+      const flowScreens = flow.screens;
       const screens = [...document.querySelectorAll(".screen")];
       const backArrow = document.querySelector(".back-arrow");
       const downsideTitle = document.querySelector("[data-downside-title]");
       const downsideSubtitle = document.querySelector("[data-downside-subtitle]");
       const checklist = document.querySelector("[data-checklist]");
       const goalButtons = [...document.querySelectorAll("[data-goal]")];
-      const radioRows = [...document.querySelectorAll(".radio-row")];
+      const radioList = document.querySelector(".radio-list");
+      let radioRows = [...document.querySelectorAll(".radio-row")];
       const storageKey = "see-alcohol-onboarding-html-state";
-      const checklistOptions = {
-        less: [
-          "Social life without overdoing it",
-          "Improved health",
-          "Fewer bad mornings / less brain fog",
-          "Better sleep",
-          "Weight loss / fewer calories",
-          "Drinking feels too automatic",
-          "Alcohol takes up less space",
-        ],
-        stop: [
-          "Get my health back",
-          "No more bad mornings",
-          "Less anxiety, shame, or regret",
-          "Once I start, I can’t stop",
-          "Protect my relationships",
-          "Protect my work or reputation",
-        ],
-      };
       let active = "welcome";
       let goal = null;
       let historyStack = [];
       let checkRows = [];
       let selectedChecksByGoal = { less: [], stop: [] };
+
+      function setText(selector, value, root = document) {
+        const element = root.querySelector(selector);
+        if (element) element.textContent = value;
+      }
+
+      function setImage(selector, imageKey, root = document) {
+        const image = root.querySelector(selector);
+        if (image) image.src = flow.assets[imageKey];
+      }
+
+      function renderParagraphs(container, paragraphs) {
+        container.innerHTML = paragraphs.map((text) => `<p class="body dark">${text}</p>`).join("");
+      }
+
+      function hydrateBranchScreen(screenName) {
+        const screen = document.querySelector(`.screen[data-screen="${screenName}"]`);
+        const data = flowScreens[screenName];
+        setText(".headline", data.headline, screen);
+        setImage(".art", data.imageKey, screen);
+        renderParagraphs(screen.querySelector(".branch-copy"), data.body);
+        setText(".primary-button", data.button, screen);
+      }
+
+      function hydrateCopy() {
+        const welcome = document.querySelector('.screen[data-screen="welcome"]');
+        setText(".headline", flowScreens.welcome.headline, welcome);
+        setText(".body", flowScreens.welcome.body, welcome);
+        setText(".primary-button", flowScreens.welcome.button, welcome);
+
+        const goalScreen = document.querySelector('.screen[data-screen="goal"]');
+        goalScreen.querySelector(".headline").innerHTML = flowScreens.goal.headlineLines.join("<br />");
+        flowScreens.goal.choices.forEach((choice) => {
+          const button = goalScreen.querySelector(`[data-goal="${choice.goal}"]`);
+          setImage(".choice-icon img", choice.imageKey, button);
+          setText(".choice-label", choice.label, button);
+        });
+
+        hydrateBranchScreen("benefits");
+        hydrateBranchScreen("social");
+        hydrateBranchScreen("willpower");
+
+        const drinks = document.querySelector('.screen[data-screen="drinks"]');
+        setText(".headline", flowScreens.drinks.headline, drinks);
+        setText(".primary-button", flowScreens.drinks.button, drinks);
+        radioList.innerHTML = flowScreens.drinks.options
+          .map((label) => `<button class="radio-row" type="button"><span class="ring"></span><span>${label}</span></button>`)
+          .join("");
+        radioRows = [...document.querySelectorAll(".radio-row")];
+      }
 
       function readSavedState() {
         try {
@@ -564,10 +599,9 @@
 
       function updateDownsideTitle() {
         const isStop = goal === "stop";
-        downsideTitle.textContent = isStop
-          ? "Why do you want to stop drinking?"
-          : "Why do you want to drink less?";
-        downsideSubtitle.textContent = isStop ? "Pick any that apply." : "Pick all that apply.";
+        const key = isStop ? "stop" : "less";
+        downsideTitle.textContent = flowScreens.downsides.title[key];
+        downsideSubtitle.textContent = flowScreens.downsides.subtitle[key];
       }
 
       function syncGoalButtons() {
@@ -599,7 +633,7 @@
 
       function renderChecklist() {
         const key = checklistKey();
-        checklist.innerHTML = checklistOptions[key]
+        checklist.innerHTML = flowScreens.downsides.options[key]
           .map(
             (label, index) => `
               <button class="check-row${selectedChecksByGoal[key].includes(index) ? " is-selected" : ""}" type="button">
@@ -609,6 +643,17 @@
           )
           .join("");
         bindCheckRows();
+      }
+
+      function bindRadioRows() {
+        radioRows.forEach((row) => {
+          row.addEventListener("click", () => {
+            radioRows.forEach((option) => {
+              option.classList.toggle("is-selected", option === row);
+            });
+            saveState();
+          });
+        });
       }
 
       function snapshotState() {
@@ -739,19 +784,12 @@
         });
       });
 
-      radioRows.forEach((row) => {
-        row.addEventListener("click", () => {
-          radioRows.forEach((option) => {
-            option.classList.toggle("is-selected", option === row);
-          });
-          saveState();
-        });
-      });
-
       screens.forEach((screen) => {
         screen.addEventListener("scroll", saveState, { passive: true });
       });
 
+      hydrateCopy();
+      bindRadioRows();
       restoreState();
     </script>
   </body>
