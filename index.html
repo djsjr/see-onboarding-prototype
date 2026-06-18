@@ -64,8 +64,40 @@
         -webkit-tap-highlight-color: transparent;
       }
 
+      .overview-link {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 20;
+        display: none;
+        width: fit-content;
+        max-width: 200px;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.88);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .overview-link:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
+      }
+
+      @media (min-width: 768px) {
+        .overview-link {
+          display: block;
+        }
+      }
+
       .app {
         position: relative;
+        container-type: size;
         width: min(
           100vw,
           420px,
@@ -264,6 +296,29 @@
         margin: 0 auto;
       }
 
+      .moon-art {
+        width: auto;
+        max-width: 78%;
+        height: min(30cqh, 275px);
+        margin: 0 auto;
+      }
+
+      .bolt-art {
+        width: auto;
+        max-width: 78%;
+        height: min(30cqh, 275px);
+        margin: 4px auto 0;
+      }
+
+      .placeholder-art {
+        width: min(30cqh, 275px);
+        height: min(30cqh, 275px);
+        margin: 0 auto;
+        border: 4px dashed rgba(49, 87, 201, 0.45);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.26);
+      }
+
       .branch-copy {
         margin: 0 0 8px;
       }
@@ -279,6 +334,48 @@
 
       .branch-copy .body + .body {
         margin-top: 1.2em;
+      }
+
+      .mini-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        width: 100%;
+        margin-top: 36px;
+      }
+
+      .mini-progress span {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+
+      .mini-progress span.is-active {
+        width: 48px;
+      }
+
+      .mini-progress:empty {
+        display: none;
+      }
+
+      .impact-flow {
+        justify-content: center;
+      }
+
+      .impact-flow .headline {
+        max-width: 360px;
+      }
+
+      .impact-card-flow {
+        justify-content: center;
+        gap: clamp(26px, 5vh, 44px);
+      }
+
+      .impact-card-flow .body {
+        max-width: 350px;
+        margin-top: 10px;
       }
 
       .checklist-screen {
@@ -401,6 +498,16 @@
           width: min(74vw, 278px);
         }
 
+        .moon-art,
+        .bolt-art {
+          height: min(28cqh, 230px);
+        }
+
+        .placeholder-art {
+          width: min(28cqh, 230px);
+          height: min(28cqh, 230px);
+        }
+
         .benefits-art {
           margin: 0 auto;
         }
@@ -412,6 +519,7 @@
     </style>
   </head>
   <body>
+    <a class="overview-link" href="overview.html">See overview</a>
     <main class="app" aria-live="polite">
       <button class="back-arrow" type="button" aria-label="Go back">‹</button>
 
@@ -496,6 +604,76 @@
           <button class="radio-row" type="button"><span class="ring"></span><span>25–49</span></button>
           <button class="radio-row" type="button"><span class="ring"></span><span>50+</span></button>
         </div>
+        <button class="primary-button" type="button" data-next="grip">continue</button>
+      </section>
+
+      <section class="screen" data-screen="grip">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-flow">
+          <h1 class="headline medium">When alcohol’s grip slips, things start to get better...</h1>
+        </div>
+        <button class="primary-button" type="button" data-next="sleep">continue</button>
+      </section>
+
+      <section class="screen" data-screen="sleep">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-card-flow">
+          <div>
+            <h1 class="headline medium">Get a Better Night’s Sleep</h1>
+            <p class="body">Your sleep cycles improve. A better chance to rest, recover and reset.</p>
+          </div>
+          <img class="art moon-art" src="assets/images/moon.png" alt="" />
+        </div>
+        <button class="primary-button" type="button" data-next="energy">continue</button>
+      </section>
+
+      <section class="screen" data-screen="energy">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-card-flow">
+          <div>
+            <h1 class="headline medium">Have More Energy</h1>
+            <p class="body">Fewer sluggish mornings and days. Less hours wasted and more power for the day</p>
+          </div>
+          <img class="art bolt-art" src="assets/images/lightning_bolt.png" alt="" />
+        </div>
+        <button class="primary-button" type="button" data-next="focus">continue</button>
+      </section>
+
+      <section class="screen" data-screen="focus">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-card-flow">
+          <div>
+            <h1 class="headline medium">Focus On What’s Important</h1>
+            <p class="body">Attention comes back online. Finish tasks after you start them. Get things done faster.</p>
+          </div>
+          <div class="placeholder-art" aria-hidden="true"></div>
+        </div>
+        <button class="primary-button" type="button" data-next="memory">continue</button>
+      </section>
+
+      <section class="screen" data-screen="memory">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-card-flow">
+          <div>
+            <h1 class="headline medium">Sharper Memory</h1>
+            <p class="body">Brain Fog Lifts. Experience better recall and an increased sense of confidence.</p>
+          </div>
+          <div class="placeholder-art" aria-hidden="true"></div>
+        </div>
+        <button class="primary-button" type="button" data-next="relationships">continue</button>
+      </section>
+
+      <section class="screen" data-screen="relationships">
+        <div class="mini-progress" aria-hidden="true"></div>
+        <div class="content impact-card-flow">
+          <div>
+            <h1 class="headline medium">Relationships Improve</h1>
+            <p class="body">
+              Experience more patience and freedom from anger, allowing relationships with family, friends, and loved ones to heal.
+            </p>
+          </div>
+          <div class="placeholder-art" aria-hidden="true"></div>
+        </div>
         <button class="primary-button" type="button">continue</button>
       </section>
     </main>
@@ -542,6 +720,41 @@
         setText(".primary-button", data.button, screen);
       }
 
+      function renderMiniProgress(screen, activeIndex) {
+        const progress = screen.querySelector(".mini-progress");
+
+        if (!progress || !Number.isInteger(activeIndex)) {
+          if (progress) progress.innerHTML = "";
+          return;
+        }
+
+        progress.innerHTML = Array.from(
+          { length: flow.impactCarouselCount },
+          (_, index) => `<span class="${index === activeIndex ? "is-active" : ""}"></span>`
+        ).join("");
+        const dots = [...progress.querySelectorAll("span")];
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === activeIndex);
+        });
+      }
+
+      function hydrateImpactScreen(screenName) {
+        const screen = document.querySelector(`.screen[data-screen="${screenName}"]`);
+        const data = flowScreens[screenName];
+        setText(".headline", data.headline, screen);
+        setText(".primary-button", data.button, screen);
+        renderMiniProgress(screen, data.progressIndex);
+
+        if (data.imageKey) {
+          setImage(".art", data.imageKey, screen);
+        }
+
+        if (data.body) {
+          const body = screen.querySelector(".body");
+          if (body) body.textContent = data.body[0];
+        }
+      }
+
       function hydrateCopy() {
         const welcome = document.querySelector('.screen[data-screen="welcome"]');
         setText(".headline", flowScreens.welcome.headline, welcome);
@@ -559,6 +772,12 @@
         hydrateBranchScreen("benefits");
         hydrateBranchScreen("social");
         hydrateBranchScreen("willpower");
+        hydrateImpactScreen("grip");
+        hydrateImpactScreen("sleep");
+        hydrateImpactScreen("energy");
+        hydrateImpactScreen("focus");
+        hydrateImpactScreen("memory");
+        hydrateImpactScreen("relationships");
 
         const drinks = document.querySelector('.screen[data-screen="drinks"]');
         setText(".headline", flowScreens.drinks.headline, drinks);
@@ -593,6 +812,74 @@
         }
         if (screenName === "drinks") {
           return ["welcome", "goal", goal === "less" ? "social" : "benefits", "willpower", "downsides"];
+        }
+        if (screenName === "grip") {
+          return ["welcome", "goal", goal === "less" ? "social" : "benefits", "willpower", "downsides", "drinks"];
+        }
+        if (screenName === "sleep") {
+          return [
+            "welcome",
+            "goal",
+            goal === "less" ? "social" : "benefits",
+            "willpower",
+            "downsides",
+            "drinks",
+            "grip",
+          ];
+        }
+        if (screenName === "energy") {
+          return [
+            "welcome",
+            "goal",
+            goal === "less" ? "social" : "benefits",
+            "willpower",
+            "downsides",
+            "drinks",
+            "grip",
+            "sleep",
+          ];
+        }
+        if (screenName === "focus") {
+          return [
+            "welcome",
+            "goal",
+            goal === "less" ? "social" : "benefits",
+            "willpower",
+            "downsides",
+            "drinks",
+            "grip",
+            "sleep",
+            "energy",
+          ];
+        }
+        if (screenName === "memory") {
+          return [
+            "welcome",
+            "goal",
+            goal === "less" ? "social" : "benefits",
+            "willpower",
+            "downsides",
+            "drinks",
+            "grip",
+            "sleep",
+            "energy",
+            "focus",
+          ];
+        }
+        if (screenName === "relationships") {
+          return [
+            "welcome",
+            "goal",
+            goal === "less" ? "social" : "benefits",
+            "willpower",
+            "downsides",
+            "drinks",
+            "grip",
+            "sleep",
+            "energy",
+            "focus",
+            "memory",
+          ];
         }
         return ["welcome"];
       }

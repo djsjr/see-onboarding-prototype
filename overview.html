@@ -39,32 +39,28 @@
         font-family: "Public Sans", system-ui, sans-serif;
       }
 
-      .overview-header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 18px 24px;
-        background: rgba(5, 5, 5, 0.88);
-        backdrop-filter: blur(14px);
-      }
-
-      .overview-header h1 {
-        margin: 0;
-        font-family: "Gilroy", system-ui, sans-serif;
-        font-size: 24px;
-        line-height: 1;
-      }
-
-      .overview-header a {
-        color: white;
+      .overview-link {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 20;
+        width: fit-content;
+        max-width: 200px;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.88);
+        font-family: "Public Sans", system-ui, sans-serif;
+        font-size: 14px;
         font-weight: 700;
+        line-height: 1;
+        text-align: center;
         text-decoration: none;
-        opacity: 0.74;
+      }
+
+      .overview-link:hover {
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
       }
 
       .board {
@@ -72,7 +68,7 @@
         flex-wrap: wrap;
         align-items: flex-start;
         gap: 42px 34px;
-        padding: 26px 30px 56px;
+        padding: 72px 30px 56px;
       }
 
       .artboard-card {
@@ -97,8 +93,9 @@
 
       .phone {
         position: relative;
+        container-type: size;
         width: var(--phone-width);
-        height: var(--phone-height);
+        min-height: var(--phone-height);
         overflow: hidden;
         transform: scale(var(--scale));
         transform-origin: top left;
@@ -125,6 +122,15 @@
         background-image: url("assets/images/background_yellow.png");
         background-position: center;
         background-size: cover;
+      }
+
+      .phone.is-expanded {
+        height: var(--expanded-height);
+      }
+
+      .phone.is-expanded .screen {
+        bottom: auto;
+        min-height: var(--expanded-height);
       }
 
       .content {
@@ -263,6 +269,29 @@
         margin: 0 auto;
       }
 
+      .moon-art {
+        width: auto;
+        max-width: 78%;
+        height: min(30cqh, 275px);
+        margin: 0 auto;
+      }
+
+      .bolt-art {
+        width: auto;
+        max-width: 78%;
+        height: min(30cqh, 275px);
+        margin: 4px auto 0;
+      }
+
+      .placeholder-art {
+        width: min(30cqh, 275px);
+        height: min(30cqh, 275px);
+        margin: 0 auto;
+        border: 4px dashed rgba(49, 87, 201, 0.45);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.26);
+      }
+
       .branch-flow {
         justify-content: center;
         gap: clamp(18px, 4.8vh, 36px);
@@ -278,6 +307,48 @@
 
       .branch-copy .body + .body {
         margin-top: 1.2em;
+      }
+
+      .mini-progress {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        width: 100%;
+        margin-top: 36px;
+      }
+
+      .mini-progress span {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+
+      .mini-progress span.is-active {
+        width: 48px;
+      }
+
+      .mini-progress:empty {
+        display: none;
+      }
+
+      .impact-flow {
+        justify-content: center;
+      }
+
+      .impact-flow .headline {
+        max-width: 360px;
+      }
+
+      .impact-card-flow {
+        justify-content: center;
+        gap: clamp(26px, 5vh, 44px);
+      }
+
+      .impact-card-flow .body {
+        max-width: 350px;
+        margin-top: 10px;
       }
 
       .checklist-screen {
@@ -358,10 +429,7 @@
     </style>
   </head>
   <body>
-    <header class="overview-header">
-      <h1>Onboarding Flow Overview</h1>
-      <a href="index.html">Interactive flow</a>
-    </header>
+    <a class="overview-link" href="index.html">See interactive</a>
     <main class="board" data-board></main>
 
     <script src="flow-data.js"></script>
@@ -435,6 +503,52 @@
         `;
       }
 
+      function renderProgress(activeIndex) {
+        if (!Number.isInteger(activeIndex)) return "";
+
+        return `
+          <div class="mini-progress" aria-hidden="true">
+            ${Array.from(
+              { length: flow.impactCarouselCount },
+              (_, index) => `<span class="${index === activeIndex ? "is-active" : ""}"></span>`
+            ).join("")}
+          </div>
+        `;
+      }
+
+      function renderImpact(screenName) {
+        const data = flow.screens[screenName];
+        const art = data.placeholder
+          ? `<div class="${data.imageClass}" aria-hidden="true"></div>`
+          : `<img class="art ${data.imageClass}" src="${flow.assets[data.imageKey]}" alt="" />`;
+
+        if (!data.imageKey && !data.placeholder) {
+          return `
+            <section class="screen">
+              ${renderProgress(data.progressIndex)}
+              <div class="content impact-flow">
+                <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
+              </div>
+              ${button(data.button)}
+            </section>
+          `;
+        }
+
+        return `
+          <section class="screen">
+            ${renderProgress(data.progressIndex)}
+            <div class="content impact-card-flow">
+              <div>
+                <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
+                <p class="body">${escapeHtml(data.body[0])}</p>
+              </div>
+              ${art}
+            </div>
+            ${button(data.button)}
+          </section>
+        `;
+      }
+
       function renderDownsides(goal) {
         const data = flow.screens.downsides;
         return `
@@ -486,6 +600,16 @@
         }
         if (item.screen === "downsides") return renderDownsides(item.goal);
         if (item.screen === "drinks") return renderDrinks();
+        if (
+          item.screen === "grip" ||
+          item.screen === "sleep" ||
+          item.screen === "energy" ||
+          item.screen === "focus" ||
+          item.screen === "memory" ||
+          item.screen === "relationships"
+        ) {
+          return renderImpact(item.screen);
+        }
         return "";
       }
 
@@ -501,6 +625,19 @@
           `
         )
         .join("");
+
+      document.querySelectorAll(".phone-crop").forEach((crop) => {
+        const phone = crop.querySelector(".phone");
+        const screen = phone.querySelector(".screen");
+        const scale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--scale")) || 0.43;
+        const neededHeight = Math.ceil(screen.scrollHeight);
+
+        if (neededHeight > 912) {
+          crop.style.height = `${neededHeight * scale}px`;
+          phone.style.setProperty("--expanded-height", `${neededHeight}px`);
+          phone.classList.add("is-expanded");
+        }
+      });
     </script>
   </body>
 </html>
