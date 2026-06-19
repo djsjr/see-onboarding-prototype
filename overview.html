@@ -14,7 +14,7 @@
       @font-face {
         font-family: "Public Sans";
         src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
-        font-weight: 600;
+        font-weight: 100 900;
       }
 
       :root {
@@ -549,14 +549,14 @@
         `;
       }
 
-      function renderDownsides(goal) {
+      function renderDownsides() {
         const data = flow.screens.downsides;
         return `
           <section class="screen checklist-screen">
-            <h1 class="headline compact">${escapeHtml(data.title[goal])}</h1>
-            <p class="checklist-subtitle">${escapeHtml(data.subtitle[goal])}</p>
+            <h1 class="headline compact">${escapeHtml(data.title)}</h1>
+            <p class="checklist-subtitle">${escapeHtml(data.subtitle)}</p>
             <div class="checklist">
-              ${data.options[goal]
+              ${data.options
                 .map(
                   (label, index) => `
                     <button class="check-row${index === 1 ? " is-selected" : ""}" type="button">
@@ -598,7 +598,7 @@
         if (item.screen === "social" || item.screen === "benefits" || item.screen === "willpower") {
           return renderBranch(item.screen);
         }
-        if (item.screen === "downsides") return renderDownsides(item.goal);
+        if (item.screen === "downsides") return renderDownsides();
         if (item.screen === "drinks") return renderDrinks();
         if (
           item.screen === "grip" ||

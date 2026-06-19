@@ -20,7 +20,7 @@
       @font-face {
         font-family: "Public Sans";
         src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
-        font-weight: 600;
+        font-weight: 100 900;
       }
 
       :root {
@@ -566,7 +566,7 @@
       <section class="screen" data-screen="social">
         <div class="content branch-flow">
           <h1 class="headline medium">That is great.</h1>
-          <img class="art toast-art" src="assets/images/champagne_toast.png" alt="" />
+          <img class="art toast-art" src="assets/images/champagne_toast_2.png?v=20260619-0132" alt="" />
           <div class="branch-copy">
             <p class="body dark">Alcohol is a powerful social lubricant. Parties, celebrations, events with friends and family.</p>
             <p class="body dark">Drink responsibly — just less often, with less brain fog, less regret, and better health.</p>
@@ -695,7 +695,7 @@
       let goal = null;
       let historyStack = [];
       let checkRows = [];
-      let selectedChecksByGoal = { less: [], stop: [] };
+      let selectedChecks = [];
 
       function setText(selector, value, root = document) {
         const element = root.querySelector(selector);
@@ -790,9 +790,28 @@
 
       function readSavedState() {
         try {
-          return JSON.parse(window.localStorage.getItem(storageKey)) || {};
+          return JSON.parse(window.sessionStorage.getItem(storageKey)) || {};
         } catch {
           return {};
+        }
+      }
+
+      function isReloadNavigation() {
+        const navigationEntry = window.performance?.getEntriesByType?.("navigation")?.[0];
+
+        if (navigationEntry?.type) {
+          return navigationEntry.type === "reload";
+        }
+
+        return window.performance?.navigation?.type === 1;
+      }
+
+      function clearSavedState() {
+        try {
+          window.localStorage.removeItem(storageKey);
+          window.sessionStorage.removeItem(storageKey);
+        } catch {
+          // The prototype should keep working even if storage is unavailable.
         }
       }
 
@@ -885,20 +904,14 @@
       }
 
       function updateDownsideTitle() {
-        const isStop = goal === "stop";
-        const key = isStop ? "stop" : "less";
-        downsideTitle.textContent = flowScreens.downsides.title[key];
-        downsideSubtitle.textContent = flowScreens.downsides.subtitle[key];
+        downsideTitle.textContent = flowScreens.downsides.title;
+        downsideSubtitle.textContent = flowScreens.downsides.subtitle;
       }
 
       function syncGoalButtons() {
         goalButtons.forEach((choice) => {
           choice.classList.toggle("is-selected", choice.dataset.goal === goal);
         });
-      }
-
-      function checklistKey() {
-        return goal === "stop" ? "stop" : "less";
       }
 
       function selectedChecklistIndexes() {
@@ -912,18 +925,17 @@
         checkRows.forEach((row) => {
           row.addEventListener("click", () => {
             row.classList.toggle("is-selected");
-            selectedChecksByGoal[checklistKey()] = selectedChecklistIndexes();
+            selectedChecks = selectedChecklistIndexes();
             saveState();
           });
         });
       }
 
       function renderChecklist() {
-        const key = checklistKey();
-        checklist.innerHTML = flowScreens.downsides.options[key]
+        checklist.innerHTML = flowScreens.downsides.options
           .map(
             (label, index) => `
-              <button class="check-row${selectedChecksByGoal[key].includes(index) ? " is-selected" : ""}" type="button">
+              <button class="check-row${selectedChecks.includes(index) ? " is-selected" : ""}" type="button">
                 <span class="ring"></span><span>${label}</span>
               </button>
             `
@@ -944,7 +956,7 @@
       }
 
       function snapshotState() {
-        selectedChecksByGoal[checklistKey()] = selectedChecklistIndexes();
+        selectedChecks = selectedChecklistIndexes();
         const selectedRadio = radioRows.findIndex((row) => row.classList.contains("is-selected"));
         const scrollTops = {};
         screens.forEach((screen) => {
@@ -955,7 +967,7 @@
           active,
           goal,
           historyStack,
-          selectedChecksByGoal,
+          selectedChecks,
           selectedRadio,
           scrollTops,
         };
@@ -963,7 +975,7 @@
 
       function saveState() {
         try {
-          window.localStorage.setItem(storageKey, JSON.stringify(snapshotState()));
+          window.sessionStorage.setItem(storageKey, JSON.stringify(snapshotState()));
           window.history.replaceState(null, "", `#${active}`);
         } catch {
           // The prototype should keep working even if storage is unavailable.
@@ -987,8 +999,9 @@
       }
 
       function restoreState() {
-        const savedState = readSavedState();
-        const hashScreen = window.location.hash.replace("#", "");
+        const shouldRestore = isReloadNavigation();
+        const savedState = shouldRestore ? readSavedState() : {};
+        const hashScreen = shouldRestore ? window.location.hash.replace("#", "") : "";
         const savedActive = screenExists(hashScreen) ? hashScreen : savedState.active;
         active = screenExists(savedActive) ? savedActive : "welcome";
         goal = savedState.goal === "stop" || savedState.goal === "less" ? savedState.goal : null;
@@ -1000,13 +1013,13 @@
           historyStack = inferredHistory(active);
         }
 
-        if (savedState.selectedChecksByGoal && typeof savedState.selectedChecksByGoal === "object") {
-          selectedChecksByGoal = {
-            less: Array.isArray(savedState.selectedChecksByGoal.less) ? savedState.selectedChecksByGoal.less : [],
-            stop: Array.isArray(savedState.selectedChecksByGoal.stop) ? savedState.selectedChecksByGoal.stop : [],
-          };
-        } else if (Array.isArray(savedState.selectedChecks)) {
-          selectedChecksByGoal[checklistKey()] = savedState.selectedChecks;
+        if (Array.isArray(savedState.selectedChecks)) {
+          selectedChecks = savedState.selectedChecks;
+        } else if (savedState.selectedChecksByGoal && typeof savedState.selectedChecksByGoal === "object") {
+          const previousKey = goal === "stop" ? "stop" : "less";
+          selectedChecks = Array.isArray(savedState.selectedChecksByGoal[previousKey])
+            ? savedState.selectedChecksByGoal[previousKey]
+            : [];
         }
 
         radioRows.forEach((row, index) => {
@@ -1022,6 +1035,11 @@
           const activeScreen = document.querySelector(`.screen[data-screen="${active}"]`);
           activeScreen.scrollTop = savedState.scrollTops?.[active] || 0;
         });
+
+        if (!shouldRestore) {
+          clearSavedState();
+          saveState();
+        }
       }
 
       function showScreen(name, options = {}) {
