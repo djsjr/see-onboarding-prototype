@@ -9,7 +9,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       lineChart: image("line_chart.png"),
       onOffSwitch: image("on-off_switch.png"),
       lifeBenefitsArc: image("life_benefits_arc.png"),
-      champagneToast: image("champagne_toast_2.png?v=20260619-0132"),
+      champagneToast: image("champagne_toast_3.png?v=20260619-1157"),
       letGoHand: image("let_go_hand_outline.png"),
       moon: image("moon.png"),
       lightningBolt: image("lightning_bolt.png"),
