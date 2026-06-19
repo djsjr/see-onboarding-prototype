@@ -12,7 +12,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       champagneToast: image("champagne_toast_3.png?v=20260619-1322"),
       letGoHand: image("let_go_hand_outline.png?v=20260619-1322"),
       moon: image("moon.png?v=20260619-1524"),
-      lightningBolt: image("lightning_bolt.png"),
+      lightningBolt: image("lightning_bolt_2.png?v=20260619-1537"),
     },
     screens: {
       welcome: {
