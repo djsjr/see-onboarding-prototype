@@ -11,8 +11,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       lifeBenefitsArc: image("life_benefits_arc.png"),
       champagneToast: image("champagne_toast_3.png?v=20260619-1322"),
       letGoHand: image("let_go_hand_outline.png?v=20260619-1322"),
-      moon: image("moon_light.png?v=20260619-1629"),
-      lightningBolt: image("lightning_bolt_2.png?v=20260619-1537"),
+      moon: image("moon_light.png?v=20260620-1324"),
+      lightningBolt: image("lightning_bolt_3.png?v=20260620-1304"),
       brain: image("brain.png?v=20260619-2000"),
     },
     screens: {
