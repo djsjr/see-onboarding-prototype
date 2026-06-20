@@ -11,8 +11,9 @@ window.SEE_ONBOARDING_FLOW = (() => {
       lifeBenefitsArc: image("life_benefits_arc.png"),
       champagneToast: image("champagne_toast_3.png?v=20260619-1322"),
       letGoHand: image("let_go_hand_outline.png?v=20260619-1322"),
-      moon: image("moon.png?v=20260619-1524"),
+      moon: image("moon_light.png?v=20260619-1629"),
       lightningBolt: image("lightning_bolt_2.png?v=20260619-1537"),
+      brain: image("brain.png?v=20260619-2000"),
     },
     screens: {
       welcome: {
@@ -118,8 +119,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       focus: {
         headline: "Focus On What’s Important",
         headlineClass: "medium",
-        imageClass: "placeholder-art",
-        placeholder: true,
+        imageKey: "brain",
+        imageClass: "brain-art",
         body: ["Attention comes back online. Finish tasks after you start them. Get things done faster."],
         button: "continue",
         progressIndex: 2,
