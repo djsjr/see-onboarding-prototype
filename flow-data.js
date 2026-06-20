@@ -9,11 +9,11 @@ window.SEE_ONBOARDING_FLOW = (() => {
       lineChart: image("line_chart.png"),
       onOffSwitch: image("on-off_switch.png"),
       lifeBenefitsArc: image("life_benefits_arc.png"),
-      champagneToast: image("champagne_toast_3.png?v=20260619-1322"),
-      letGoHand: image("let_go_hand_outline.png?v=20260619-1322"),
-      moon: image("moon_light.png?v=20260620-1324"),
-      lightningBolt: image("lightning_bolt_3.png?v=20260620-1304"),
-      brain: image("brain.png?v=20260619-2000"),
+      champagneToast: image("champagne_toast.png?v=20260620-1544"),
+      letGoHand: image("letting_go_hand.png?v=20260620-1544"),
+      moon: image("moon_sleep.png?v=20260620-1544"),
+      lightningBolt: image("lightning_bolt.png?v=20260620-1544"),
+      brain: image("brain.png?v=20260620-1544"),
     },
     screens: {
       welcome: {
