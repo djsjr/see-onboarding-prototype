@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alcohol Onboarding Flow Overview</title>
     <style>
@@ -13,19 +13,18 @@
 
       @font-face {
         font-family: "Public Sans";
-        src: url("assets/fonts/PublicSans-VariableFont_wght.ttf") format("truetype");
-        font-weight: 100 900;
+        src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
+        font-weight: 800;
       }
 
       :root {
         --blue: #3157c9;
         --dark: #252323;
+        --light: #ffffff;
         --yellow: #fad250;
-        --gold: #e8a522;
-        --light: #fff8df;
+        --phone-width: 430px;
+        --phone-height: 932px;
         --scale: 0.43;
-        --phone-width: 420px;
-        --phone-height: 912px;
       }
 
       * {
@@ -34,80 +33,69 @@
 
       body {
         margin: 0;
-        background: #050505;
-        color: white;
+        min-height: 100vh;
+        background: #17120a;
+        color: var(--light);
         font-family: "Public Sans", system-ui, sans-serif;
       }
 
       .overview-link {
         position: fixed;
-        top: 16px;
-        left: 16px;
-        z-index: 20;
-        width: fit-content;
-        max-width: 200px;
+        top: 18px;
+        right: 18px;
+        z-index: 5;
+        color: var(--light);
+        font: 800 14px/1 "Public Sans", sans-serif;
+        text-decoration: none;
+        background: rgba(49, 87, 201, 0.9);
         border-radius: 999px;
         padding: 10px 14px;
-        background: rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.88);
-        font-family: "Public Sans", system-ui, sans-serif;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-        text-decoration: none;
-      }
-
-      .overview-link:hover {
-        background: rgba(255, 255, 255, 0.18);
-        color: white;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
       }
 
       .board {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        gap: 42px 34px;
-        padding: 72px 30px 56px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(calc(var(--phone-width) * var(--scale)), 1fr));
+        gap: 28px 20px;
+        align-items: start;
+        padding: 70px 24px 34px;
       }
 
       .artboard-card {
-        width: calc(var(--phone-width) * var(--scale));
+        display: grid;
+        justify-items: center;
+        gap: 8px;
       }
 
       .artboard-label {
-        min-height: 22px;
-        margin: 0 0 8px;
-        color: rgba(255, 255, 255, 0.76);
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 1.2;
+        width: calc(var(--phone-width) * var(--scale));
+        margin: 0;
+        color: rgba(255, 255, 255, 0.78);
+        font: 800 12px/1.1 "Public Sans", sans-serif;
       }
 
       .phone-crop {
         width: calc(var(--phone-width) * var(--scale));
         height: calc(var(--phone-height) * var(--scale));
         overflow: hidden;
-        background: var(--yellow);
+        border-radius: 18px;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+        background: #ffe68e;
       }
 
       .phone {
         position: relative;
-        container-type: size;
         width: var(--phone-width);
-        min-height: var(--phone-height);
+        height: var(--phone-height);
         overflow: hidden;
+        color: var(--dark);
         transform: scale(var(--scale));
         transform-origin: top left;
-        background: var(--yellow);
+        background: #ffe68e url("assets/images/background_yellow.png") center/cover no-repeat;
       }
 
-      button {
-        border: 0;
-        padding: 0;
-        color: inherit;
-        font: inherit;
-        background: transparent;
+      .phone.is-expanded {
+        height: var(--expanded-height);
       }
 
       .screen {
@@ -115,69 +103,44 @@
         inset: 0;
         display: flex;
         flex-direction: column;
-        gap: 18px;
         padding: 28px 24px 20px;
-        overflow: hidden;
-        background-color: var(--yellow);
-        background-image: url("assets/images/background_yellow.png");
-        background-position: center;
-        background-size: cover;
       }
 
-      .phone.is-expanded {
-        height: var(--expanded-height);
-      }
-
-      .phone.is-expanded .screen {
-        bottom: auto;
-        min-height: var(--expanded-height);
-      }
-
-      .content {
-        display: flex;
+      .content-center {
         flex: 1;
+        display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: stretch;
+        min-height: 0;
       }
 
-      .top-copy {
-        justify-content: flex-start;
-        padding-top: 18vh;
-      }
-
-      .welcome-copy {
-        justify-content: center;
-        padding-top: 8vh;
+      .content-scroll {
+        flex: 1;
+        overflow: hidden;
+        padding: 52px 0 22px 10px;
       }
 
       .headline {
         margin: 0;
         color: var(--dark);
-        font-family: "Gilroy", system-ui, sans-serif;
-        font-size: 50px;
-        font-weight: 800;
-        line-height: 0.98;
-        letter-spacing: 0;
+        font: 800 50px/1.05 "Gilroy", sans-serif;
+        white-space: pre-line;
       }
 
       .headline.medium {
         font-size: 42px;
-        line-height: 1.03;
       }
 
-      .headline.compact {
+      .headline.small {
         font-size: 36px;
-        line-height: 1.08;
       }
 
       .body {
-        max-width: 320px;
-        margin: 18px 0 0;
+        margin: 20px 0 0;
         color: var(--blue);
-        font-family: "Public Sans", system-ui, sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1.2;
+        font: 800 18px/1.22 "Public Sans", sans-serif;
+        white-space: pre-line;
       }
 
       .body.dark {
@@ -186,250 +149,193 @@
 
       .primary-button {
         width: 100%;
-        min-height: 58px;
-        margin-top: auto;
+        min-height: 56px;
+        border: 0;
         border-radius: 999px;
         background: var(--blue);
-        box-shadow: 0 6px 10px rgba(37, 35, 35, 0.26);
-        color: white;
-        font-family: "Gilroy", system-ui, sans-serif;
-        font-size: 18px;
-        font-weight: 800;
+        color: var(--light);
+        font: 800 18px/1 "Gilroy", sans-serif;
+        box-shadow: 0 7px 12px rgba(37, 35, 35, 0.25);
       }
 
-      .choice-stack {
+      .choice-stack,
+      .radio-list,
+      .checklist {
         display: grid;
-        gap: 24px;
-        margin-top: 32px;
+        gap: 16px;
+        margin-top: 30px;
       }
 
-      .choice {
-        display: grid;
-        grid-template-columns: 78px 1fr;
+      .choice,
+      .radio-row,
+      .check-row,
+      .answer-choice {
+        border: 0;
+        background: rgba(255, 255, 255, 0.5);
+        color: var(--dark);
+        border-radius: 10px;
+        min-height: 76px;
+        padding: 10px 14px;
+        display: flex;
         align-items: center;
-        gap: 18px;
-        min-height: 80px;
-        border-radius: 14px;
-        padding: 8px 14px 8px 10px;
+        gap: 14px;
         text-align: left;
+        font: 800 22px/1.08 "Gilroy", sans-serif;
       }
 
-      .choice.is-selected {
+      .choice.is-selected,
+      .radio-row.is-selected,
+      .check-row.is-selected {
         background: var(--blue);
+        color: var(--light);
         box-shadow: 0 5px 10px rgba(37, 35, 35, 0.26);
-        color: white;
       }
 
       .choice-icon {
-        display: grid;
         width: 78px;
         height: 78px;
-        place-items: center;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.94);
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
       }
 
       .choice-icon img {
-        display: block;
-        width: 48px;
-        height: 48px;
-        object-fit: contain;
+        max-width: 48px;
+        max-height: 48px;
       }
 
-      .choice-label {
-        color: var(--dark);
-        font-family: "Gilroy", system-ui, sans-serif;
-        font-size: 27px;
-        font-weight: 800;
-        line-height: 1.08;
+      .ring {
+        width: 28px;
+        height: 28px;
+        border: 3px solid currentColor;
+        border-radius: 50%;
+        display: inline-grid;
+        place-items: center;
+        flex: 0 0 auto;
       }
 
-      .choice.is-selected .choice-label {
-        color: white;
+      .is-selected .ring::after {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      .answer-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 34px;
+      }
+
+      .answer-choice {
+        justify-content: center;
+        text-align: center;
       }
 
       .art {
         display: block;
-        width: 100%;
+        max-width: 72%;
+        max-height: 245px;
         object-fit: contain;
+        margin: 30px auto;
       }
 
-      .benefits-art {
-        max-width: 285px;
-        margin: 0 auto;
-      }
-
-      .toast-art {
-        width: min(68vw, 250px);
-        margin: 0 auto;
-      }
-
-      .willpower-art {
-        width: min(82vw, 320px);
-        margin: 0 auto;
-      }
-
-      .moon-art {
-        width: auto;
-        max-width: 78%;
-        height: min(30cqh, 275px);
-        margin: 0 auto;
-      }
-
-      .bolt-art {
-        width: auto;
-        max-width: 78%;
-        height: min(30cqh, 275px);
-        margin: 4px auto 0;
-      }
-
-      .brain-art {
-        width: min(72vw, 285px);
-        margin: 0 auto;
-      }
-
-      .placeholder-art {
-        width: min(30cqh, 275px);
-        height: min(30cqh, 275px);
-        margin: 0 auto;
-        border: 4px dashed rgba(49, 87, 201, 0.45);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.26);
-      }
-
-      .branch-flow {
-        justify-content: center;
-        gap: clamp(18px, 4.8vh, 36px);
-      }
-
-      .branch-copy {
-        margin: 0 0 8px;
-      }
-
-      .branch-copy .body {
-        margin-top: 0;
-      }
-
-      .branch-copy .body + .body {
-        margin-top: 1.2em;
-      }
-
-      .mini-progress {
+      .impact-progress {
         display: flex;
+        gap: 4px;
         justify-content: center;
-        align-items: center;
-        gap: 7px;
-        width: 100%;
-        margin-top: 36px;
+        margin-top: 2px;
       }
 
-      .mini-progress span {
-        width: 10px;
+      .impact-progress span {
+        width: 24px;
         height: 10px;
-        border-radius: 999px;
+        transform: skewX(-28deg);
+        background: rgba(49, 87, 201, 0.38);
+      }
+
+      .impact-progress span.is-active {
+        width: 54px;
         background: var(--blue);
       }
 
-      .mini-progress span.is-active {
-        width: 48px;
+      .scale-card {
+        margin-top: 28px;
+        position: relative;
       }
 
-      .mini-progress:empty {
-        display: none;
+      .scale-card img {
+        width: 100%;
+        display: block;
       }
 
-      .impact-flow {
-        justify-content: center;
-      }
-
-      .impact-flow .headline {
-        max-width: 360px;
-      }
-
-      .impact-card-flow {
-        justify-content: center;
-        gap: clamp(26px, 5vh, 44px);
-      }
-
-      .impact-card-flow .body {
-        max-width: 350px;
-        margin-top: 10px;
-      }
-
-      .checklist-screen {
-        gap: 10px;
-        padding: 100px 34px 20px;
-      }
-
-      .checklist,
-      .radio-list {
-        display: grid;
-        gap: 14px;
-        margin: 8px 0 12px;
-      }
-
-      .checklist-subtitle {
-        margin: 4px 0 12px;
-        color: var(--blue);
-        font-family: "Public Sans", system-ui, sans-serif;
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1.2;
-      }
-
-      .check-row,
-      .radio-row {
-        display: grid;
-        grid-template-columns: 30px 1fr;
-        align-items: center;
-        gap: 10px;
-        margin-left: -10px;
-        min-height: 32px;
-        border-radius: 8px;
-        padding: 4px 10px;
-        color: var(--dark);
-        text-align: left;
-        font-family: "Gilroy", system-ui, sans-serif;
-        font-size: 19px;
+      .scale-display,
+      .scale-copy {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        font-family: "Gilroy", sans-serif;
         font-weight: 800;
-        line-height: 1.04;
       }
 
-      .ring {
-        display: grid;
-        width: 25px;
-        height: 25px;
-        place-items: center;
-        border: 3px solid var(--blue);
-        border-radius: 50%;
-        background: transparent;
-        box-shadow: 0 2px 4px rgba(37, 35, 35, 0.18);
+      .scale-display {
+        top: 3.8%;
+        width: 42%;
+        color: var(--yellow);
+        background: #222;
+        border: 2px solid rgba(255, 255, 255, 0.85);
+        border-radius: 7px;
+        padding: 7px 6px 4px;
       }
 
-      .ring::after {
-        content: "";
-        width: 11px;
-        height: 6px;
-        border-bottom: 3px solid currentColor;
-        border-left: 3px solid currentColor;
-        color: white;
-        opacity: 0;
-        transform: rotate(-45deg) translate(1px, -1px);
+      .scale-display .big {
+        display: block;
+        font-size: 22px;
+        line-height: 0.9;
+        letter-spacing: 1px;
       }
 
-      .is-selected {
-        background: var(--blue);
-        color: white;
-        box-shadow: 0 4px 8px rgba(37, 35, 35, 0.22);
+      .scale-display .small {
+        display: block;
+        margin-top: 3px;
+        font-size: 9px;
+        line-height: 1;
       }
 
-      .is-selected .ring {
-        border-color: white;
-        color: white;
+      .scale-copy {
+        top: 30.5%;
+        width: 74%;
       }
 
-      .is-selected .ring::after {
-        opacity: 1;
+      .scale-copy .white {
+        color: var(--light);
+        font-size: 17px;
+        line-height: 1.05;
+      }
+
+      .scale-copy .yellow {
+        color: var(--yellow);
+        font-size: 40px;
+        line-height: 0.98;
+      }
+
+      .scale-copy .pounds {
+        color: var(--yellow);
+        font-size: 68px;
+        line-height: 0.95;
+        margin-top: 20px;
+      }
+
+      .scale-copy .or {
+        color: var(--light);
+        font-size: 15px;
+        line-height: 1;
+        margin: 20px auto 0;
       }
     </style>
   </head>
@@ -443,47 +349,48 @@
       const board = document.querySelector("[data-board]");
 
       function escapeHtml(value) {
-        return String(value)
+        return String(value ?? "")
           .replaceAll("&", "&amp;")
           .replaceAll("<", "&lt;")
           .replaceAll(">", "&gt;")
           .replaceAll('"', "&quot;");
       }
 
-      function paragraphs(items) {
-        return items.map((text) => `<p class="body dark">${escapeHtml(text)}</p>`).join("");
+      function lineBreaks(value) {
+        return escapeHtml(value).replaceAll("\n", "<br />");
       }
 
-      function button(label) {
+      function bodyMarkup(body, dark = false) {
+        if (!body) return "";
+        const items = Array.isArray(body) ? body : [body];
+        return items.map((item) => `<p class="body ${dark ? "dark" : ""}">${lineBreaks(item)}</p>`).join("");
+      }
+
+      function button(label = "continue") {
         return `<button class="primary-button" type="button">${escapeHtml(label)}</button>`;
       }
 
-      function renderWelcome() {
-        const data = flow.screens.welcome;
+      function progress(index) {
+        if (!Number.isInteger(index)) return "";
         return `
-          <section class="screen">
-            <div class="content top-copy welcome-copy">
-              <h1 class="headline">${escapeHtml(data.headline)}</h1>
-              <p class="body">${escapeHtml(data.body)}</p>
-            </div>
-            ${button(data.button)}
-          </section>
+          <div class="impact-progress" aria-hidden="true">
+            ${Array.from({ length: 6 }, (_, itemIndex) => `<span class="${itemIndex === index ? "is-active" : ""}"></span>`).join("")}
+          </div>
         `;
       }
 
-      function renderGoal() {
-        const data = flow.screens.goal;
+      function renderGoal(screen) {
         return `
           <section class="screen">
-            <div class="content">
-              <h1 class="headline">${data.headlineLines.map(escapeHtml).join("<br />")}</h1>
+            <div class="content-center">
+              <h1 class="headline">${lineBreaks(screen.headline)}</h1>
               <div class="choice-stack">
-                ${data.choices
+                ${screen.choices
                   .map(
                     (choice, index) => `
-                      <button class="choice${index === 0 ? " is-selected" : ""}" type="button">
+                      <button class="choice ${index === 0 ? "is-selected" : ""}" type="button">
                         <span class="choice-icon"><img src="${flow.assets[choice.imageKey]}" alt="" /></span>
-                        <span class="choice-label">${escapeHtml(choice.label)}</span>
+                        <span>${escapeHtml(choice.label)}</span>
                       </button>
                     `
                   )
@@ -494,128 +401,143 @@
         `;
       }
 
-      function renderBranch(screenName) {
-        const data = flow.screens[screenName];
+      function renderRadio(screen) {
         return `
           <section class="screen">
-            <div class="content branch-flow">
-              <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
-              <img class="art ${data.imageClass}" src="${flow.assets[data.imageKey]}" alt="" />
-              <div class="branch-copy">${paragraphs(data.body)}</div>
+            <div class="content-scroll">
+              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <div class="radio-list">
+                ${screen.options
+                  .map(
+                    (option, index) => `
+                      <button class="radio-row ${index === screen.selectedIndex ? "is-selected" : ""}" type="button">
+                        <span class="ring"></span><span>${escapeHtml(option)}</span>
+                      </button>
+                    `
+                  )
+                  .join("")}
+              </div>
             </div>
-            ${button(data.button)}
+            ${button()}
           </section>
         `;
       }
 
-      function renderProgress(activeIndex) {
-        if (!Number.isInteger(activeIndex)) return "";
-
-        return `
-          <div class="mini-progress" aria-hidden="true">
-            ${Array.from(
-              { length: flow.impactCarouselCount },
-              (_, index) => `<span class="${index === activeIndex ? "is-active" : ""}"></span>`
-            ).join("")}
-          </div>
-        `;
-      }
-
-      function renderImpact(screenName) {
-        const data = flow.screens[screenName];
-        const art = data.placeholder
-          ? `<div class="${data.imageClass}" aria-hidden="true"></div>`
-          : `<img class="art ${data.imageClass}" src="${flow.assets[data.imageKey]}" alt="" />`;
-
-        if (!data.imageKey && !data.placeholder) {
-          return `
-            <section class="screen">
-              ${renderProgress(data.progressIndex)}
-              <div class="content impact-flow">
-                <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
-              </div>
-              ${button(data.button)}
-            </section>
-          `;
-        }
-
+      function renderChecklist(screen) {
         return `
           <section class="screen">
-            ${renderProgress(data.progressIndex)}
-            <div class="content impact-card-flow">
-              <div>
-                <h1 class="headline ${data.headlineClass}">${escapeHtml(data.headline)}</h1>
-                <p class="body">${escapeHtml(data.body[0])}</p>
+            <div class="content-scroll">
+              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              ${bodyMarkup(screen.body)}
+              <div class="checklist">
+                ${screen.options
+                  .map(
+                    (option, index) => `
+                      <button class="check-row ${screen.selectedIndexes.includes(index) ? "is-selected" : ""}" type="button">
+                        <span class="ring"></span><span>${escapeHtml(option)}</span>
+                      </button>
+                    `
+                  )
+                  .join("")}
               </div>
-              ${art}
             </div>
-            ${button(data.button)}
+            ${button()}
           </section>
         `;
       }
 
-      function renderDownsides() {
-        const data = flow.screens.downsides;
+      function renderScale(screen) {
+        const scale = flow.sampleScale;
         return `
-          <section class="screen checklist-screen">
-            <h1 class="headline compact">${escapeHtml(data.title)}</h1>
-            <p class="checklist-subtitle">${escapeHtml(data.subtitle)}</p>
-            <div class="checklist">
-              ${data.options
-                .map(
-                  (label, index) => `
-                    <button class="check-row${index === 1 ? " is-selected" : ""}" type="button">
-                      <span class="ring"></span><span>${escapeHtml(label)}</span>
-                    </button>
-                  `
-                )
-                .join("")}
+          <section class="screen">
+            <div class="content-center">
+              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <div class="scale-card">
+                <img src="${flow.assets.scale}" alt="" />
+                <div class="scale-display">
+                  <span class="big">${scale.displayWeeklyDrinks} DRINKS</span>
+                  <span class="small">PER WEEK</span>
+                </div>
+                <div class="scale-copy">
+                  <div class="white">That’s</div>
+                  <div class="yellow">${scale.dailyCaloriesLow}–${scale.dailyCaloriesHigh}</div>
+                  <div class="white">calories per day</div>
+                  <div class="or">or</div>
+                  <div class="pounds">${scale.yearlyPounds} lbs</div>
+                  <div class="white">per year.</div>
+                </div>
+              </div>
             </div>
-            ${button(data.button)}
+            ${button()}
           </section>
         `;
       }
 
-      function renderDrinks() {
-        const data = flow.screens.drinks;
+      function renderQuestion(screen) {
         return `
-          <section class="screen checklist-screen">
-            <h1 class="headline compact">${escapeHtml(data.headline)}</h1>
-            <div class="radio-list">
-              ${data.options
-                .map(
-                  (label, index) => `
-                    <button class="radio-row${index === 1 ? " is-selected" : ""}" type="button">
-                      <span class="ring"></span><span>${escapeHtml(label)}</span>
-                    </button>
-                  `
-                )
-                .join("")}
+          <section class="screen">
+            <div class="content-center">
+              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              ${bodyMarkup(screen.body)}
+              <div class="answer-row">
+                <button class="answer-choice" type="button">${escapeHtml(screen.yes)}</button>
+                <button class="answer-choice" type="button">${escapeHtml(screen.no)}</button>
+              </div>
             </div>
-            ${button(data.button)}
           </section>
         `;
       }
 
-      function renderScreen(item) {
-        if (item.screen === "welcome") return renderWelcome();
-        if (item.screen === "goal") return renderGoal();
-        if (item.screen === "social" || item.screen === "benefits" || item.screen === "willpower") {
-          return renderBranch(item.screen);
-        }
-        if (item.screen === "downsides") return renderDownsides();
-        if (item.screen === "drinks") return renderDrinks();
-        if (
-          item.screen === "grip" ||
-          item.screen === "sleep" ||
-          item.screen === "energy" ||
-          item.screen === "focus" ||
-          item.screen === "memory" ||
-          item.screen === "relationships"
-        ) {
-          return renderImpact(item.screen);
-        }
-        return "";
+      function renderCopy(screen) {
+        return `
+          <section class="screen">
+            <div class="content-center">
+              <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              ${bodyMarkup(screen.body)}
+            </div>
+            ${button(screen.button)}
+          </section>
+        `;
+      }
+
+      function renderArtCopy(screen) {
+        return `
+          <section class="screen">
+            <div class="content-center">
+              <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" />
+              ${bodyMarkup(screen.body, true)}
+            </div>
+            ${button(screen.button)}
+          </section>
+        `;
+      }
+
+      function renderBenefit(screen) {
+        return `
+          <section class="screen">
+            ${progress(screen.progressIndex)}
+            <div class="content-center">
+              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              ${bodyMarkup(screen.body)}
+              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" />
+            </div>
+            ${button()}
+          </section>
+        `;
+      }
+
+      function renderScreen(screenName) {
+        const screen = flow.screens[screenName];
+        if (!screen) return "";
+        if (screen.type === "goal") return renderGoal(screen);
+        if (screen.type === "radio") return renderRadio(screen);
+        if (screen.type === "checklist") return renderChecklist(screen);
+        if (screen.type === "scale") return renderScale(screen);
+        if (screen.type === "question") return renderQuestion(screen);
+        if (screen.type === "artCopy") return renderArtCopy(screen);
+        if (screen.type === "benefit") return renderBenefit(screen);
+        return renderCopy(screen);
       }
 
       board.innerHTML = flow.overview
@@ -624,7 +546,7 @@
             <article class="artboard-card">
               <p class="artboard-label">${escapeHtml(item.label)}</p>
               <div class="phone-crop">
-                <div class="phone">${renderScreen(item)}</div>
+                <div class="phone">${renderScreen(item.screen)}</div>
               </div>
             </article>
           `
@@ -634,10 +556,11 @@
       document.querySelectorAll(".phone-crop").forEach((crop) => {
         const phone = crop.querySelector(".phone");
         const screen = phone.querySelector(".screen");
+        const scrollContent = screen.querySelector(".content-scroll");
         const scale = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--scale")) || 0.43;
-        const neededHeight = Math.ceil(screen.scrollHeight);
+        const neededHeight = Math.max(932, scrollContent ? scrollContent.scrollHeight + 130 : screen.scrollHeight);
 
-        if (neededHeight > 912) {
+        if (neededHeight > 932) {
           crop.style.height = `${neededHeight * scale}px`;
           phone.style.setProperty("--expanded-height", `${neededHeight}px`);
           phone.classList.add("is-expanded");
