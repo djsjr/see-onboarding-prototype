@@ -85,7 +85,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       },
       willpower: {
         type: "artCopy",
-        headline: "But It’s Not About Willpower",
+        headline: "It’s Not About Willpower",
         headlineSize: "medium",
         imageKey: "lettingGoHand",
         body:
@@ -182,24 +182,10 @@ window.SEE_ONBOARDING_FLOW = (() => {
       noiseQuestion1: {
         type: "question",
         headline: "Do you think about drinking before you even start?",
-        yes: "Yeah, I do",
+        body:
+          "Like picturing where you’ll be, what you’ll drink, who you’ll be with, or how you’ll feel.",
+        yes: "Yes",
         no: "Not really",
-        next: "noiseQuestion2",
-      },
-      noiseQuestion2: {
-        type: "question",
-        headline:
-          "Do you picture where you’ll be, what you’ll drink, who you’ll be with, or how you’ll feel?",
-        yes: "For sure",
-        no: "Not usually",
-        next: "noiseQuestion3",
-      },
-      noiseQuestion3: {
-        type: "question",
-        headline:
-          "Do you ever justify drinking in your head when you know you shouldn’t?",
-        yes: "Sometimes, yeah",
-        no: "Not so much",
         next: "drinkNoise",
       },
       drinkNoise: {
@@ -211,7 +197,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       },
       innerTyrant: {
         type: "copy",
-        headline: "The See App Separates You from the Inner Tyrant.",
+        headline: "The See App Separates You From the Inner Tyrant.",
         body: "You see the thoughts as they arise and the noise loses.",
         next: "withoutThinking",
       },
@@ -225,7 +211,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         headline:
           "When others are drinking, do you find yourself going along automatically?",
         body: "Maybe even when you planned on NOT drinking at all",
-        yes: "Yeah, I do",
+        yes: "Yes",
         no: "Not usually",
         next: "automaticDrinking",
       },
@@ -267,9 +253,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       { screen: "memory", label: "9E" },
       { screen: "relationships", label: "9F" },
       { screen: "questionsIntro", label: "10" },
-      { screen: "noiseQuestion1", label: "11A" },
-      { screen: "noiseQuestion2", label: "11B" },
-      { screen: "noiseQuestion3", label: "11C" },
+      { screen: "noiseQuestion1", label: "11" },
       { screen: "drinkNoise", label: "12" },
       { screen: "innerTyrant", label: "13" },
       { screen: "withoutThinking", label: "14" },
