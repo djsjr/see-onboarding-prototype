@@ -97,7 +97,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         type: "radio",
         headline: "How many alcoholic drinks do you have weekly?",
         options: ["1–3", "4–7", "8–14", "15–24", "25–49", "50+"],
-        selectedIndex: 4,
+        selectedIndex: null,
         next: "scale",
       },
       scale: {
@@ -110,7 +110,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         headline: "What Else Does Alcohol Cost You?",
         body: "Pick all that apply.",
         options: costOptions,
-        selectedIndexes: [1, 5, 7],
+        selectedIndexes: [],
         next: "grip",
       },
       grip: {

@@ -387,8 +387,8 @@
               <div class="choice-stack">
                 ${screen.choices
                   .map(
-                    (choice, index) => `
-                      <button class="choice ${index === 0 ? "is-selected" : ""}" type="button">
+                    (choice) => `
+                      <button class="choice" type="button">
                         <span class="choice-icon"><img src="${flow.assets[choice.imageKey]}" alt="" /></span>
                         <span>${escapeHtml(choice.label)}</span>
                       </button>
@@ -433,7 +433,7 @@
                 ${screen.options
                   .map(
                     (option, index) => `
-                      <button class="check-row ${screen.selectedIndexes.includes(index) ? "is-selected" : ""}" type="button">
+                      <button class="check-row ${(screen.selectedIndexes || []).includes(index) ? "is-selected" : ""}" type="button">
                         <span class="ring"></span><span>${escapeHtml(option)}</span>
                       </button>
                     `

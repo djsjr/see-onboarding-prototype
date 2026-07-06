@@ -357,7 +357,7 @@
       const backArrow = document.querySelector(".back-arrow");
       const historyStack = [];
       let active = flow.firstScreen;
-      let goal = "less";
+      let goal = null;
       let drinkIndex = flow.screens.drinks.selectedIndex;
 
       function escapeHtml(value) {
@@ -445,7 +445,7 @@
                 ${screen.options
                   .map(
                     (option, index) => `
-                      <button class="check-row ${screen.selectedIndexes.includes(index) ? "is-selected" : ""}" type="button">
+                      <button class="check-row ${(screen.selectedIndexes || []).includes(index) ? "is-selected" : ""}" type="button">
                         <span class="ring"></span><span>${escapeHtml(option)}</span>
                       </button>
                     `
