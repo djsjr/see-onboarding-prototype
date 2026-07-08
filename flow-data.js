@@ -69,7 +69,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         headline: "That's great.",
         imageKey: "toast",
         body:
-          "Alcohol is a powerful social lubricant. Drink responsibly — with better health, less brain fog, and less regret.",
+          "Alcohol is a powerful social lubricant. But consuming less is better your health— have more energy, less brain fog, and less regret.",
         next: "willpower",
       },
       benefits: {
@@ -89,8 +89,15 @@ window.SEE_ONBOARDING_FLOW = (() => {
         headlineSize: "medium",
         imageKey: "lettingGoHand",
         body:
-          "Trying harder doesn't always work, but the See App helps you access the power of choice.",
+          "Trying harder to cut down doesn’t work, but the See App will show you how you access the power of choice.",
         button: "Let’s find that!",
+        next: "catchMoment",
+      },
+      catchMoment: {
+        type: "copy",
+        headline: "Catch the moment before drinking happens.",
+        body:
+          "The See App shows you how to see the thought, urge, or automatic pull before it takes over. Then it loses its power over you.",
         next: "drinks",
       },
       drinks: {
@@ -115,7 +122,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       },
       grip: {
         type: "copy",
-        headline: "When alcohol has less control, life gets better",
+        headline: "Less alcohol means more energy, clear thinking and control of your life.",
         next: "sleep",
       },
       sleep: {
@@ -131,7 +138,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         type: "benefit",
         headline: "More Energy",
         body:
-          "Fewer sluggish mornings. Less time wasted and more power throughout the day",
+          "Fewer sluggish mornings. Less time wasted and more initiative throughout the day,",
         imageKey: "lightning",
         progressIndex: 1,
         next: "physicalHealth",
@@ -149,7 +156,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         type: "benefit",
         headline: "Better Focus",
         body:
-          "Attention comes back online. Finish tasks and get things done faster.",
+          "Your attention comes back online. You finish tasks and get things done faster.",
         imageKey: "checklist",
         progressIndex: 3,
         next: "memory",
@@ -167,7 +174,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         type: "benefit",
         headline: "Improved Relationships",
         body:
-          "Freedom from anger and increased patience with friends and loved ones.",
+          "Freedom from anger and increased patience with friends and loved ones — the people in your life who matter.",
         imageKey: "relationship",
         progressIndex: 5,
         next: "questionsIntro",
@@ -192,7 +199,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
         type: "copy",
         headline: "That’s\nDrink Noise.",
         body:
-          "It’s the mental chatter that pushes you toward drinking. Your mind rehearses the event before you ever pick it up. You imagine social success, confidence, connection, or just fitting in with others who’ll drink too.",
+          "It’s the mental chatter that pushes you toward drinking. Your mind rehearses drinking events before you ever arrive for the first sip. You imagine social success, confidence, connection, or just fitting in with others who’ll drink too.",
         next: "innerTyrant",
       },
       innerTyrant: {
@@ -203,7 +210,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       },
       withoutThinking: {
         type: "copy",
-        headline: "But it can also happen without thinking…",
+        headline: "But it can also happen quietly, without thinking…",
         next: "automaticQuestion",
       },
       automaticQuestion: {
@@ -220,20 +227,50 @@ window.SEE_ONBOARDING_FLOW = (() => {
         headline: "That’s Automatic Drinking.",
         body:
           "No planning ahead. No real decision. The opportunity just appears — a party, a business meeting, a night out — and you’re on autopilot.",
-        next: "driverSeat",
+        next: "catchAutomaticMoment",
       },
-      driverSeat: {
+      catchAutomaticMoment: {
         type: "copy",
-        headline: "The See App\nPuts You Back\nin the Driver’s\nSeat.",
+        headline: "The See App Helps you Catch That Moment.",
         body:
-          "You become aware of the blind impulses and their pull evaporates.",
-        next: "nonContemplative",
+          "You begin to notice the automatic pull as it appears, before it turns into action.",
+        next: "howItWorks",
       },
-      nonContemplative: {
+      howItWorks: {
         type: "copy",
-        headline: "Through\nNon-Contemplative\nMeditation...",
+        headline: "Here’s How it Works.",
         body:
-          "The See App helps you recognize the thoughts, urges, and automatic pull before they turn into drinking.",
+          "Through Non-Contemplative Meditation, you learn to see the thoughts, urges, and automatic pulls before they take over.",
+        next: "simplestMeditation",
+      },
+      simplestMeditation: {
+        type: "copy",
+        headline: "The Simplest, Most Effective Meditation on Earth.",
+        body: [
+          "One technique. Just 10 to 20 minutes, twice a day — once in the morning, and again before bed.",
+          "No mantras. No hypnosis. No breathwork. No mood music.",
+        ],
+        next: "trustedVoice",
+      },
+      trustedVoice: {
+        type: "videoCopy",
+        headline: "One Trusted Voice",
+        body:
+          "With over 40 years of experience, Dan Schwarzhoff guides you through each session of Non-Contemplative Meditation exactly as he’s practiced it for decades. Meet him here.",
+        next: "faithCompatible",
+      },
+      faithCompatible: {
+        type: "copy",
+        headline: "And It Won’t Conflict With Your Faith.",
+        body:
+          "Free from New Age narratives and Eastern philosophy, Non-Contemplative meditation is completely compatible across Christian denominations.",
+        next: "choiceRestored",
+      },
+      choiceRestored: {
+        type: "copy",
+        headline: "The Power of Choice Is Restored.",
+        body:
+          "The pull to drink weakens, and you stop doing what you don’t want to do, and can choose to drink less/eliminate alcohol from your life.",
       },
     },
     overview: [
@@ -242,25 +279,30 @@ window.SEE_ONBOARDING_FLOW = (() => {
       { screen: "social", label: "3A · Drink less" },
       { screen: "benefits", label: "3B · Stop completely" },
       { screen: "willpower", label: "4" },
-      { screen: "drinks", label: "5" },
-      { screen: "scale", label: "6" },
-      { screen: "cost", label: "7" },
-      { screen: "grip", label: "8" },
-      { screen: "sleep", label: "9A" },
-      { screen: "energy", label: "9B" },
-      { screen: "physicalHealth", label: "9C" },
-      { screen: "focus", label: "9D" },
-      { screen: "memory", label: "9E" },
-      { screen: "relationships", label: "9F" },
-      { screen: "questionsIntro", label: "10" },
-      { screen: "noiseQuestion1", label: "11" },
-      { screen: "drinkNoise", label: "12" },
-      { screen: "innerTyrant", label: "13" },
-      { screen: "withoutThinking", label: "14" },
-      { screen: "automaticQuestion", label: "15" },
-      { screen: "automaticDrinking", label: "16" },
-      { screen: "driverSeat", label: "17" },
-      { screen: "nonContemplative", label: "18" },
+      { screen: "catchMoment", label: "5" },
+      { screen: "drinks", label: "6" },
+      { screen: "scale", label: "7" },
+      { screen: "cost", label: "8" },
+      { screen: "grip", label: "9" },
+      { screen: "sleep", label: "10A" },
+      { screen: "energy", label: "10B" },
+      { screen: "physicalHealth", label: "10C" },
+      { screen: "focus", label: "10D" },
+      { screen: "memory", label: "10E" },
+      { screen: "relationships", label: "10F" },
+      { screen: "questionsIntro", label: "11" },
+      { screen: "noiseQuestion1", label: "12" },
+      { screen: "drinkNoise", label: "13" },
+      { screen: "innerTyrant", label: "14" },
+      { screen: "withoutThinking", label: "15" },
+      { screen: "automaticQuestion", label: "16" },
+      { screen: "automaticDrinking", label: "17" },
+      { screen: "catchAutomaticMoment", label: "18" },
+      { screen: "howItWorks", label: "19" },
+      { screen: "simplestMeditation", label: "20" },
+      { screen: "trustedVoice", label: "21" },
+      { screen: "faithCompatible", label: "22" },
+      { screen: "choiceRestored", label: "23" },
     ],
   };
 })();

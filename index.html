@@ -241,6 +241,19 @@
         margin: 30px auto;
       }
 
+      .video-placeholder {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border-radius: 10px;
+        background: var(--blue);
+        color: var(--light);
+        display: grid;
+        place-items: center;
+        margin: 26px 0 6px;
+        font: 800 24px/1 "Gilroy", sans-serif;
+        box-shadow: 0 8px 18px rgba(37, 35, 35, 0.24);
+      }
+
       .impact-progress {
         display: flex;
         gap: 4px;
@@ -512,6 +525,19 @@
         `;
       }
 
+      function renderVideoCopy(screen) {
+        return `
+          <section class="screen is-active" data-screen="${active}">
+            <div class="content-center">
+              <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              ${bodyMarkup(screen.body)}
+              <div class="video-placeholder">VIDEO</div>
+            </div>
+            ${buttonMarkup(screen.button)}
+          </section>
+        `;
+      }
+
       function renderArtCopy(screen) {
         return `
           <section class="screen is-active" data-screen="${active}">
@@ -548,6 +574,7 @@
         if (screen.type === "scale") return renderScale(screen);
         if (screen.type === "question") return renderQuestion(screen);
         if (screen.type === "artCopy") return renderArtCopy(screen);
+        if (screen.type === "videoCopy") return renderVideoCopy(screen);
         if (screen.type === "benefit") return renderBenefit(screen);
         return renderCopy(screen);
       }
