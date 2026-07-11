@@ -21,7 +21,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       background: image("background_yellow.png"),
       lineChart: image("line_chart.png"),
       onOffSwitch: image("on_off_switch.png"),
-      benefitsArc: image("life_benefits_arc.png"),
+      benefitsArc: image("drink_less.png"),
       toast: image("champagne_toast_2.png"),
       lettingGoHand: image("letting_go_hand.png"),
       scale: image("scale_square_4.png"),
@@ -31,6 +31,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       checklist: image("checklist.png"),
       brain: image("brain.png"),
       relationship: image("relationship.png"),
+      drinkNoise: image("drink_noise_simple.png"),
+      autoDrinking: image("bottle_grab.png"),
     },
     firstScreen: "welcome",
     sampleScale: {
@@ -196,10 +198,13 @@ window.SEE_ONBOARDING_FLOW = (() => {
         next: "drinkNoise",
       },
       drinkNoise: {
-        type: "copy",
+        type: "artCopy",
         headline: "That’s\nDrink Noise.",
-        body:
-          "It’s the mental chatter that pushes you toward drinking. Your mind rehearses drinking events before you ever arrive for the first sip. You imagine social success, confidence, connection, or just fitting in with others who’ll drink too.",
+        imageKey: "drinkNoise",
+        body: [
+          "It’s the mental chatter that pushes you toward drinking. Your mind rehearses drinking events before you ever arrive for the first sip.",
+          "You imagine social success, confidence, connection, or just fitting in with others who’ll drink too.",
+        ],
         next: "innerTyrant",
       },
       innerTyrant: {
@@ -223,8 +228,9 @@ window.SEE_ONBOARDING_FLOW = (() => {
         next: "automaticDrinking",
       },
       automaticDrinking: {
-        type: "copy",
+        type: "artCopy",
         headline: "That’s Automatic Drinking.",
+        imageKey: "autoDrinking",
         body:
           "No planning ahead. No real decision. The opportunity just appears — a party, a business meeting, a night out — and you’re on autopilot.",
         next: "catchAutomaticMoment",

@@ -65,6 +65,19 @@
         display: grid;
         justify-items: center;
         gap: 8px;
+        color: inherit;
+        text-decoration: none;
+        border-radius: 18px;
+        transition:
+          transform 140ms ease,
+          filter 140ms ease;
+      }
+
+      .artboard-card:hover,
+      .artboard-card:focus-visible {
+        filter: brightness(1.08);
+        outline: none;
+        transform: translateY(-3px);
       }
 
       .artboard-label {
@@ -356,7 +369,7 @@
     <a class="overview-link" href="index.html">See interactive</a>
     <main class="board" data-board></main>
 
-    <script src="flow-data.js"></script>
+    <script src="flow-data.js?v=20260711-bottle-grab"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const board = document.querySelector("[data-board]");
@@ -570,12 +583,12 @@
       board.innerHTML = flow.overview
         .map(
           (item) => `
-            <article class="artboard-card">
+            <a class="artboard-card" href="index.html?screen=${encodeURIComponent(item.screen)}&from=overview">
               <p class="artboard-label">${escapeHtml(item.label)}</p>
               <div class="phone-crop">
                 <div class="phone">${renderScreen(item.screen)}</div>
               </div>
-            </article>
+            </a>
           `
         )
         .join("");

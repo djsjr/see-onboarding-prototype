@@ -363,13 +363,16 @@
       <div data-screen-host></div>
     </main>
 
-    <script src="flow-data.js"></script>
+    <script src="flow-data.js?v=20260711-bottle-grab"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const host = document.querySelector("[data-screen-host]");
       const backArrow = document.querySelector(".back-arrow");
       const historyStack = [];
-      let active = flow.firstScreen;
+      const params = new URLSearchParams(window.location.search);
+      const requestedScreen = params.get("screen");
+      const cameFromOverview = params.get("from") === "overview";
+      let active = flow.screens[requestedScreen] ? requestedScreen : flow.firstScreen;
       let goal = null;
       let drinkIndex = flow.screens.drinks.selectedIndex;
 
@@ -628,6 +631,10 @@
 
       backArrow.addEventListener("click", () => {
         const previous = historyStack.pop();
+        if (!previous && cameFromOverview) {
+          window.location.href = "overview.html";
+          return;
+        }
         if (!previous) return;
         active = previous;
         draw();
