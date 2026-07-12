@@ -145,6 +145,22 @@
         font-size: 42px;
       }
 
+      .headline.size-48 {
+        font-size: 48px;
+      }
+
+      .headline.size-46 {
+        font-size: 46px;
+      }
+
+      .headline.size-44 {
+        font-size: 44px;
+      }
+
+      .headline.size-40 {
+        font-size: 40px;
+      }
+
       .headline.small {
         font-size: 36px;
       }
@@ -251,8 +267,8 @@
 
       .art {
         display: block;
-        max-width: 72%;
-        max-height: 245px;
+        width: 72%;
+        height: 245px;
         object-fit: contain;
         margin: 30px auto;
       }
@@ -369,7 +385,7 @@
     <a class="overview-link" href="index.html">See interactive</a>
     <main class="board" data-board></main>
 
-    <script src="flow-data.js?v=20260712-copy-order"></script>
+    <script src="flow-data.js?v=20260712-image-preload"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const board = document.querySelector("[data-board]");
@@ -431,7 +447,7 @@
         return `
           <section class="screen">
             <div class="content-scroll">
-              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               <div class="radio-list">
                 ${screen.options
                   .map(
@@ -453,7 +469,7 @@
         return `
           <section class="screen">
             <div class="content-scroll">
-              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               ${bodyMarkup(screen.body)}
               <div class="checklist">
                 ${screen.options
@@ -477,7 +493,7 @@
         return `
           <section class="screen">
             <div class="content-center">
-              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               <div class="scale-card">
                 <img src="${flow.assets.scale}" alt="" />
                 <div class="scale-display">
@@ -503,7 +519,7 @@
         return `
           <section class="screen">
             <div class="content-center">
-              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               ${bodyMarkup(screen.body)}
               <div class="answer-row">
                 <button class="answer-choice" type="button">${escapeHtml(screen.yes)}</button>
@@ -544,7 +560,7 @@
           <section class="screen">
             <div class="content-center">
               <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
-              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" />
+              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" loading="eager" decoding="async" />
               ${bodyMarkup(screen.body, true)}
             </div>
             ${button(screen.button)}
@@ -557,9 +573,9 @@
           <section class="screen">
             ${progress(screen.progressIndex)}
             <div class="content-center">
-              <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
+              <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               ${bodyMarkup(screen.body)}
-              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" />
+              <img class="art" src="${flow.assets[screen.imageKey]}" alt="" loading="eager" decoding="async" />
             </div>
             ${button()}
           </section>

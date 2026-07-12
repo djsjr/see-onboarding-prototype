@@ -60,6 +60,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "3A",
       "type": "artCopy",
       "headline": "A Smart Place to Start.",
+      "headlineSize": "size-48",
       "imageKey": "toast",
       "body": "Alcohol is a powerful social lubricant. But less alcohol means more energy, less brain fog and fewer regrets.",
       "button": "Continue",
@@ -69,7 +70,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "3B",
       "type": "artCopy",
       "headline": "Life Changes Without Alcohol.",
-      "headlineSize": "small",
+      "headlineSize": "medium",
       "imageKey": "benefitsArc",
       "body": [
         "You sleep better. Think more clearly. Feel more energy. You can repair relationships with loved ones.",
@@ -95,6 +96,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "5",
       "type": "copy",
       "headline": "Catch the moment before it happens.",
+      "headlineSize": "size-44",
       "body": [
         "Drinking begins with a thought, an urge automatically steering you toward alcohol.",
         "See those moments before they take over and they lose their power over you. The See App shows you exactly how."
@@ -106,6 +108,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "6",
       "type": "radio",
       "headline": "How many alcoholic drinks do you have weekly?",
+      "headlineSize": "size-40",
       "options": [
         "1–3",
         "4–7",
@@ -163,6 +166,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10A",
       "type": "benefit",
       "headline": "Get a Better Night’s Sleep",
+      "headlineSize": "size-46",
       "body": [
         "Less alcohol gives your natural sleep cycles a better chance to work.",
         "Rest more deeply. Recover more fully. Wake up ready."
@@ -176,6 +180,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10B",
       "type": "benefit",
       "headline": "More Energy",
+      "headlineSize": "size-46",
       "body": "Fewer sluggish mornings. Less wasted time and more initiative throughout the day",
       "imageKey": "lightning",
       "progressIndex": 1,
@@ -186,6 +191,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10C",
       "type": "benefit",
       "headline": "Better physical health",
+      "headlineSize": "size-46",
       "body": "Your body gets a break. Lower blood pressure, less inflammation, better digestion, and stronger immune defense.",
       "imageKey": "heart",
       "progressIndex": 2,
@@ -196,6 +202,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10D",
       "type": "benefit",
       "headline": "Better focus",
+      "headlineSize": "size-46",
       "body": "Your attention comes back online. You finish tasks and get things done faster.",
       "imageKey": "checklist",
       "progressIndex": 3,
@@ -206,6 +213,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10E",
       "type": "benefit",
       "headline": "Sharper memory",
+      "headlineSize": "size-46",
       "body": "As the fog lifts. You feel more confident as recall becomes easier and thinking becomes clearer.",
       "imageKey": "brain",
       "progressIndex": 4,
@@ -216,6 +224,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "10F",
       "type": "benefit",
       "headline": "Improved Relationships",
+      "headlineSize": "size-46",
       "body": "Freedom from anger and increased patience with friends and loved ones — the people in your life who matter.",
       "imageKey": "relationship",
       "progressIndex": 5,
@@ -225,7 +234,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "questionsIntro": {
       "page": "11",
       "type": "copy",
-      "headline": "But Drinking Feel Difficult to Control",
+      "headline": "But Drinking Feels Difficult to Control",
       "body": "Because it can begin before the first drink. Sometimes it starts in your thoughts. Sometimes it happens automatically in the moment.",
       "button": "Continue",
       "next": "noiseQuestion1"
@@ -243,6 +252,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "13",
       "type": "artCopy",
       "headline": "That’s\nDrink Noise.",
+      "headlineSize": "size-44",
       "imageKey": "drinkNoise",
       "body": [
         "Your mind starts drinking before your body does. It’s like an Inner Tyrant pushing thoughts toward alcohol.",
@@ -255,14 +265,17 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "14",
       "type": "copy",
       "headline": "The See App Separates You from the Inner Tyrant.",
-      "body": "You are guided to learning how to observe thoughts without automatically obeying them. Once you see them, they no longer control what happens next. You do.",
+      "body": [
+        "You are guided to learning how to observe thoughts without automatically obeying them.",
+        "Once you see them, they no longer control what happens next. You do."
+      ],
       "button": "Continue",
       "next": "withoutThinking"
     },
     "withoutThinking": {
       "page": "15",
       "type": "copy",
-      "headline": "Sometimes There Is No Noise.",
+      "headline": "But Sometimes There Is No Noise.",
       "body": "No debate. No plan. No conscious decision. You simply find yourself reaching for the drink without thinking.",
       "button": "Continue",
       "next": "automaticQuestion"
@@ -280,6 +293,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "17",
       "type": "artCopy",
       "headline": "That’s Automatic Drinking.",
+      "headlineSize": "size-44",
       "imageKey": "autoDrinking",
       "body": [
         "The opportunity appears—a party, a business event, a night out—and years of conditioning take over.",
@@ -302,7 +316,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "howItWorks": {
       "page": "19",
       "type": "copy",
-      "headline": "Here’s how it works.",
+      "headline": "Here’s how it works.",
       "body": "Non-Contemplative Meditation allows you to notice urges and drive to automatically drink before they take control, before you are carried away by thoughts.",
       "button": "Continue",
       "next": "simplestMeditation"
@@ -322,6 +336,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "21",
       "type": "videoCopy",
       "headline": "One voice. Decades of experience.",
+      "headlineSize": "size-44",
       "body": [
         "Dan Schwarzhoff has practiced Non-Contemplative Meditation for more than 40 years.",
         "A recovered alcoholic and former drug abuser, he understands the desire and need that drives obsession from experience—and the way out. He guides every session exactly as he has taught thousands and practices himself."
