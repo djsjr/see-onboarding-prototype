@@ -59,7 +59,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "social": {
       "page": "3A",
       "type": "artCopy",
-      "headline": "A Smart Place to Start.",
+      "headline": "A Smart Place to Start.",
       "headlineSize": "size-48",
       "imageKey": "toast",
       "body": "Alcohol is a powerful social lubricant. But less alcohol means more energy, less brain fog and fewer regrets.",
