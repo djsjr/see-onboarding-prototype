@@ -363,7 +363,7 @@
       <div data-screen-host></div>
     </main>
 
-    <script src="flow-data.js?v=20260711-bottle-grab"></script>
+    <script src="flow-data.js?v=20260712-copy-order"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const host = document.querySelector("[data-screen-host]");
@@ -375,6 +375,20 @@
       let active = flow.screens[requestedScreen] ? requestedScreen : flow.firstScreen;
       let goal = null;
       let drinkIndex = flow.screens.drinks.selectedIndex;
+      const selectedCostIndexes = new Set(flow.screens.cost.selectedIndexes || []);
+      const defaultBenefitScreens = ["sleep", "energy", "physicalHealth", "focus", "memory", "relationships"];
+      const costIndexToBenefitScreens = {
+        0: ["physicalHealth"],
+        1: ["focus", "memory"],
+        3: ["sleep"],
+        4: ["energy"],
+        5: ["physicalHealth"],
+        7: ["relationships"],
+        8: ["relationships"],
+        9: ["focus", "memory"],
+        10: ["energy", "focus"],
+      };
+      let orderedBenefitScreens = defaultBenefitScreens;
 
       function escapeHtml(value) {
         return String(value ?? "")
@@ -461,7 +475,7 @@
                 ${screen.options
                   .map(
                     (option, index) => `
-                      <button class="check-row ${(screen.selectedIndexes || []).includes(index) ? "is-selected" : ""}" type="button">
+                      <button class="check-row ${selectedCostIndexes.has(index) ? "is-selected" : ""}" type="button" data-cost-index="${index}">
                         <span class="ring"></span><span>${escapeHtml(option)}</span>
                       </button>
                     `
@@ -555,9 +569,11 @@
       }
 
       function renderBenefit(screen) {
+        const benefitIndex = orderedBenefitScreens.indexOf(active);
+        const progressIndex = benefitIndex === -1 ? screen.progressIndex : benefitIndex;
         return `
           <section class="screen is-active" data-screen="${active}">
-            ${progress(screen.progressIndex)}
+            ${progress(progressIndex)}
             <div class="content-center">
               <h1 class="headline medium">${lineBreaks(screen.headline)}</h1>
               ${bodyMarkup(screen.body)}
@@ -589,11 +605,51 @@
         draw();
       }
 
+      function buildOrderedBenefitScreens() {
+        if (selectedCostIndexes.size === 0) return defaultBenefitScreens;
+
+        const promoted = [];
+        const seen = new Set();
+
+        selectedCostIndexes.forEach((costIndex) => {
+          const benefitScreens = costIndexToBenefitScreens[costIndex];
+          if (!benefitScreens) return;
+
+          benefitScreens.forEach((screenName) => {
+            if (!seen.has(screenName)) {
+              seen.add(screenName);
+              promoted.push(screenName);
+            }
+          });
+        });
+
+        if (promoted.length === 0) return defaultBenefitScreens;
+
+        return [
+          ...promoted,
+          ...defaultBenefitScreens.filter((screenName) => !seen.has(screenName)),
+        ];
+      }
+
+      function nextFromCurrent(screen) {
+        if (active === "grip") {
+          orderedBenefitScreens = buildOrderedBenefitScreens();
+          return orderedBenefitScreens[0];
+        }
+
+        const benefitIndex = orderedBenefitScreens.indexOf(active);
+        if (benefitIndex !== -1) {
+          return orderedBenefitScreens[benefitIndex + 1] || "questionsIntro";
+        }
+
+        return screen.next;
+      }
+
       function continueFromCurrent() {
         const screen = flow.screens[active];
         if (!screen) return;
         if (screen.type === "goal") return;
-        goTo(screen.next);
+        goTo(nextFromCurrent(screen));
       }
 
       function draw() {
@@ -615,8 +671,16 @@
           });
         });
 
-        host.querySelectorAll(".check-row").forEach((button) => {
-          button.addEventListener("click", () => button.classList.toggle("is-selected"));
+        host.querySelectorAll("[data-cost-index]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const index = Number(button.dataset.costIndex);
+            if (selectedCostIndexes.has(index)) {
+              selectedCostIndexes.delete(index);
+            } else {
+              selectedCostIndexes.add(index);
+            }
+            button.classList.toggle("is-selected");
+          });
         });
 
         host.querySelectorAll("[data-answer]").forEach((button) => {

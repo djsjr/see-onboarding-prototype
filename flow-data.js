@@ -1,314 +1,478 @@
 window.SEE_ONBOARDING_FLOW = (() => {
   const assetBase = window.SEE_FLOW_ASSET_BASE || "assets";
   const image = (name) => `${assetBase}/images/${name}`;
+  const flow = {
+  "version": "revised",
+  "title": "Alcohol Onboarding Flow",
+  "assets": {
+    "background": "background_yellow.png",
+    "lineChart": "line_chart.png",
+    "onOffSwitch": "on_off_switch.png",
+    "benefitsArc": "drink_less.png",
+    "toast": "champagne_toast_2.png",
+    "lettingGoHand": "letting_go_hand.png",
+    "scale": "scale_square_4.png",
+    "moon": "moon_sleep.png",
+    "lightning": "lightning_bolt.png",
+    "heart": "heart.png",
+    "checklist": "checklist.png",
+    "brain": "brain.png",
+    "relationship": "relationship.png",
+    "drinkNoise": "drink_noise_simple.png",
+    "autoDrinking": "bottle_grab.png"
+  },
+  "firstScreen": "welcome",
+  "sampleScale": {
+    "displayWeeklyDrinks": 40,
+    "dailyCaloriesLow": 290,
+    "dailyCaloriesHigh": 430,
+    "yearlyPounds": 35
+  },
+  "screens": {
+    "welcome": {
+      "page": "1",
+      "type": "copy",
+      "headline": "When alcohol starts taking more than it gives, it’s time for something different.",
+      "body": [],
+      "button": "Continue",
+      "next": "goal"
+    },
+    "goal": {
+      "page": "2",
+      "type": "goal",
+      "headline": "What do you want to change?",
+      "choices": [
+        {
+          "goal": "less",
+          "label": "Drink less",
+          "imageKey": "lineChart",
+          "next": "social"
+        },
+        {
+          "goal": "stop",
+          "label": "Stop completely",
+          "imageKey": "onOffSwitch",
+          "next": "benefits"
+        }
+      ]
+    },
+    "social": {
+      "page": "3A",
+      "type": "artCopy",
+      "headline": "A Smart Place to Start.",
+      "imageKey": "toast",
+      "body": "Alcohol is a powerful social lubricant. But less alcohol means more energy, less brain fog and fewer regrets.",
+      "button": "Continue",
+      "next": "willpower"
+    },
+    "benefits": {
+      "page": "3B",
+      "type": "artCopy",
+      "headline": "Life Changes Without Alcohol.",
+      "headlineSize": "small",
+      "imageKey": "benefitsArc",
+      "body": [
+        "You sleep better. Think more clearly. Feel more energy. You can repair relationships with loved ones.",
+        "You start becoming yourself again with better focus and improved memory too."
+      ],
+      "button": "Continue",
+      "next": "willpower"
+    },
+    "willpower": {
+      "page": "4",
+      "type": "artCopy",
+      "headline": "More Willpower Isn’t the Answer.",
+      "headlineSize": "medium",
+      "imageKey": "lettingGoHand",
+      "body": [
+        "The problem isn’t that you haven’t tried hard enough to cut down.",
+        "The See App shows you access to a space within between the urge and the action—where choice is restored. No willpower needed at all."
+      ],
+      "button": "Let’s find it",
+      "next": "catchMoment"
+    },
+    "catchMoment": {
+      "page": "5",
+      "type": "copy",
+      "headline": "Catch the moment before it happens.",
+      "body": [
+        "Drinking begins with a thought, an urge automatically steering you toward alcohol.",
+        "See those moments before they take over and they lose their power over you. The See App shows you exactly how."
+      ],
+      "button": "Continue",
+      "next": "drinks"
+    },
+    "drinks": {
+      "page": "6",
+      "type": "radio",
+      "headline": "How many alcoholic drinks do you have weekly?",
+      "options": [
+        "1–3",
+        "4–7",
+        "8–14",
+        "15–24",
+        "25–49",
+        "50+"
+      ],
+      "selectedIndex": null,
+      "button": "Continue",
+      "next": "scale"
+    },
+    "scale": {
+      "page": "7",
+      "type": "scale",
+      "headline": "That Adds Up. Fast!",
+      "body": [
+        "At 40 drinks a week, alcohol alone can add roughly 4,000–6,000 calories every week.",
+        "And calories are only a small part of the total cost."
+      ],
+      "button": "Continue",
+      "next": "cost"
+    },
+    "cost": {
+      "page": "8",
+      "type": "checklist",
+      "headline": "What Else Is Alcohol Costing You?",
+      "body": "Select all that apply.",
+      "options": [
+        "Harms my physical health",
+        "Causes brain fog",
+        "Costs me too much money",
+        "Lowers my sleep quality",
+        "Less energy",
+        "Extra calories or weight gain",
+        "Hard to stop once I start",
+        "I feel anxiety, shame, or regret",
+        "Strained relationships",
+        "Work or reputation problems",
+        "Lost time"
+      ],
+      "selectedIndexes": [],
+      "button": "Continue",
+      "next": "grip"
+    },
+    "grip": {
+      "page": "9",
+      "type": "copy",
+      "headline": "Less Alcohol Means More You.",
+      "body": "More energy, clear thinking and control of your life.",
+      "button": "Continue",
+      "next": "sleep"
+    },
+    "sleep": {
+      "page": "10A",
+      "type": "benefit",
+      "headline": "Get a Better Night’s Sleep",
+      "body": [
+        "Less alcohol gives your natural sleep cycles a better chance to work.",
+        "Rest more deeply. Recover more fully. Wake up ready."
+      ],
+      "imageKey": "moon",
+      "progressIndex": 0,
+      "button": "Continue",
+      "next": "energy"
+    },
+    "energy": {
+      "page": "10B",
+      "type": "benefit",
+      "headline": "More Energy",
+      "body": "Fewer sluggish mornings. Less wasted time and more initiative throughout the day",
+      "imageKey": "lightning",
+      "progressIndex": 1,
+      "button": "Continue",
+      "next": "physicalHealth"
+    },
+    "physicalHealth": {
+      "page": "10C",
+      "type": "benefit",
+      "headline": "Better physical health",
+      "body": "Your body gets a break. Lower blood pressure, less inflammation, better digestion, and stronger immune defense.",
+      "imageKey": "heart",
+      "progressIndex": 2,
+      "button": "Continue",
+      "next": "focus"
+    },
+    "focus": {
+      "page": "10D",
+      "type": "benefit",
+      "headline": "Better focus",
+      "body": "Your attention comes back online. You finish tasks and get things done faster.",
+      "imageKey": "checklist",
+      "progressIndex": 3,
+      "button": "Continue",
+      "next": "memory"
+    },
+    "memory": {
+      "page": "10E",
+      "type": "benefit",
+      "headline": "Sharper memory",
+      "body": "As the fog lifts. You feel more confident as recall becomes easier and thinking becomes clearer.",
+      "imageKey": "brain",
+      "progressIndex": 4,
+      "button": "Continue",
+      "next": "relationships"
+    },
+    "relationships": {
+      "page": "10F",
+      "type": "benefit",
+      "headline": "Improved Relationships",
+      "body": "Freedom from anger and increased patience with friends and loved ones — the people in your life who matter.",
+      "imageKey": "relationship",
+      "progressIndex": 5,
+      "button": "Continue",
+      "next": "questionsIntro"
+    },
+    "questionsIntro": {
+      "page": "11",
+      "type": "copy",
+      "headline": "But Drinking Feel Difficult to Control",
+      "body": "Because it can begin before the first drink. Sometimes it starts in your thoughts. Sometimes it happens automatically in the moment.",
+      "button": "Continue",
+      "next": "noiseQuestion1"
+    },
+    "noiseQuestion1": {
+      "page": "12",
+      "type": "question",
+      "headline": "Do you think about drinking before you start?",
+      "body": "You may picture where you’ll be, what you’ll drink, who you’ll be with, or how drinking will make you feel.",
+      "yes": "Yes",
+      "no": "Not really",
+      "next": "drinkNoise"
+    },
+    "drinkNoise": {
+      "page": "13",
+      "type": "artCopy",
+      "headline": "That’s\nDrink Noise.",
+      "imageKey": "drinkNoise",
+      "body": [
+        "Your mind starts drinking before your body does. It’s like an Inner Tyrant pushing thoughts toward alcohol.",
+        "It rehearses the event—the confidence, connection, excitement, or feeling of fitting in—before you even arrive for the first sip."
+      ],
+      "button": "Continue",
+      "next": "innerTyrant"
+    },
+    "innerTyrant": {
+      "page": "14",
+      "type": "copy",
+      "headline": "The See App Separates You from the Inner Tyrant.",
+      "body": "You are guided to learning how to observe thoughts without automatically obeying them. Once you see them, they no longer control what happens next. You do.",
+      "button": "Continue",
+      "next": "withoutThinking"
+    },
+    "withoutThinking": {
+      "page": "15",
+      "type": "copy",
+      "headline": "Sometimes There Is No Noise.",
+      "body": "No debate. No plan. No conscious decision. You simply find yourself reaching for the drink without thinking.",
+      "button": "Continue",
+      "next": "automaticQuestion"
+    },
+    "automaticQuestion": {
+      "page": "16",
+      "type": "question",
+      "headline": "When other people are drinking, do you automatically join in?",
+      "body": "Even when you planned not to drink at all?",
+      "yes": "Yes",
+      "no": "Not usually",
+      "next": "automaticDrinking"
+    },
+    "automaticDrinking": {
+      "page": "17",
+      "type": "artCopy",
+      "headline": "That’s Automatic Drinking.",
+      "imageKey": "autoDrinking",
+      "body": [
+        "The opportunity appears—a party, a business event, a night out—and years of conditioning take over.",
+        "You’re drinking before you’ve truly decided to. You’re on autopilot."
+      ],
+      "button": "Continue",
+      "next": "catchAutomaticMoment"
+    },
+    "catchAutomaticMoment": {
+      "page": "18",
+      "type": "copy",
+      "headline": "Catch the moment.",
+      "body": [
+        "The See App helps you notice the automatic pull toward drinking as it’s happening—before it turns into action.",
+        "Awareness arrives first. Then choice becomes possible."
+      ],
+      "button": "Continue",
+      "next": "howItWorks"
+    },
+    "howItWorks": {
+      "page": "19",
+      "type": "copy",
+      "headline": "Here’s how it works.",
+      "body": "Non-Contemplative Meditation allows you to notice urges and drive to automatically drink before they take control, before you are carried away by thoughts.",
+      "button": "Continue",
+      "next": "simplestMeditation"
+    },
+    "simplestMeditation": {
+      "page": "20",
+      "type": "copy",
+      "headline": "Meditation, simplified.",
+      "body": [
+        "One method. Just 10–20 minutes, twice a day—once in the morning and again before bed.",
+        "No mantras. No hypnosis. No breathwork. No mood bending music or sound effects."
+      ],
+      "button": "Continue",
+      "next": "trustedVoice"
+    },
+    "trustedVoice": {
+      "page": "21",
+      "type": "videoCopy",
+      "headline": "One voice. Decades of experience.",
+      "body": [
+        "Dan Schwarzhoff has practiced Non-Contemplative Meditation for more than 40 years.",
+        "A recovered alcoholic and former drug abuser, he understands the desire and need that drives obsession from experience—and the way out. He guides every session exactly as he has taught thousands and practices himself."
+      ],
+      "videoLabel": "Video",
+      "videoCta": "Meet Dan",
+      "button": "Continue",
+      "next": "faithCompatible"
+    },
+    "faithCompatible": {
+      "page": "22",
+      "type": "copy",
+      "headline": "And It Won’t Conflict With Your Faith.",
+      "body": "Free from New Age narratives and Eastern philosophy, Non-Contemplative meditation is completely compatible across Christian denominations. Even spiritual recovery fellowships.",
+      "button": "Continue",
+      "next": "choiceRestored"
+    },
+    "choiceRestored": {
+      "page": "23",
+      "type": "copy",
+      "headline": "Choice returns.",
+      "body": [
+        "The desire for the effect of alcohol weakens. Drink conditioning melts. Alcohol loses. And you win.",
+        "You become able to do what you want to do: Drink less—or stop completely. Your choice."
+      ],
+      "button": "Continue"
+    }
+  },
+  "overview": [
+    {
+      "screen": "welcome",
+      "label": "1"
+    },
+    {
+      "screen": "goal",
+      "label": "2"
+    },
+    {
+      "screen": "social",
+      "label": "3A · Drink less"
+    },
+    {
+      "screen": "benefits",
+      "label": "3B · Stop completely"
+    },
+    {
+      "screen": "willpower",
+      "label": "4"
+    },
+    {
+      "screen": "catchMoment",
+      "label": "5"
+    },
+    {
+      "screen": "drinks",
+      "label": "6"
+    },
+    {
+      "screen": "scale",
+      "label": "7"
+    },
+    {
+      "screen": "cost",
+      "label": "8"
+    },
+    {
+      "screen": "grip",
+      "label": "9"
+    },
+    {
+      "screen": "sleep",
+      "label": "10A"
+    },
+    {
+      "screen": "energy",
+      "label": "10B"
+    },
+    {
+      "screen": "physicalHealth",
+      "label": "10C"
+    },
+    {
+      "screen": "focus",
+      "label": "10D"
+    },
+    {
+      "screen": "memory",
+      "label": "10E"
+    },
+    {
+      "screen": "relationships",
+      "label": "10F"
+    },
+    {
+      "screen": "questionsIntro",
+      "label": "11"
+    },
+    {
+      "screen": "noiseQuestion1",
+      "label": "12"
+    },
+    {
+      "screen": "drinkNoise",
+      "label": "13"
+    },
+    {
+      "screen": "innerTyrant",
+      "label": "14"
+    },
+    {
+      "screen": "withoutThinking",
+      "label": "15"
+    },
+    {
+      "screen": "automaticQuestion",
+      "label": "16"
+    },
+    {
+      "screen": "automaticDrinking",
+      "label": "17"
+    },
+    {
+      "screen": "catchAutomaticMoment",
+      "label": "18"
+    },
+    {
+      "screen": "howItWorks",
+      "label": "19"
+    },
+    {
+      "screen": "simplestMeditation",
+      "label": "20"
+    },
+    {
+      "screen": "trustedVoice",
+      "label": "21"
+    },
+    {
+      "screen": "faithCompatible",
+      "label": "22"
+    },
+    {
+      "screen": "choiceRestored",
+      "label": "23"
+    }
+  ]
+};
 
-  const costOptions = [
-    "Harms my physical health",
-    "Causes brain fog",
-    "Costs me too much money",
-    "Lowers my sleep quality",
-    "Less energy",
-    "Extra calories or weight gain",
-    "Hard to stop once I start",
-    "I feel anxiety, shame, or regret",
-    "Strained relationships",
-    "Work or reputation problems",
-    "Lost time",
-  ];
+  flow.assets = Object.fromEntries(
+    Object.entries(flow.assets).map(([key, value]) => [key, image(value)])
+  );
 
-  return {
-    assets: {
-      background: image("background_yellow.png"),
-      lineChart: image("line_chart.png"),
-      onOffSwitch: image("on_off_switch.png"),
-      benefitsArc: image("drink_less.png"),
-      toast: image("champagne_toast_2.png"),
-      lettingGoHand: image("letting_go_hand.png"),
-      scale: image("scale_square_4.png"),
-      moon: image("moon_sleep.png"),
-      lightning: image("lightning_bolt.png"),
-      heart: image("heart.png"),
-      checklist: image("checklist.png"),
-      brain: image("brain.png"),
-      relationship: image("relationship.png"),
-      drinkNoise: image("drink_noise_simple.png"),
-      autoDrinking: image("bottle_grab.png"),
-    },
-    firstScreen: "welcome",
-    sampleScale: {
-      displayWeeklyDrinks: 40,
-      dailyCaloriesLow: 290,
-      dailyCaloriesHigh: 430,
-      yearlyPounds: 35,
-    },
-    screens: {
-      welcome: {
-        type: "copy",
-        headline: "Get your life\nback from\nalcohol.",
-        body: "If drinking is taking too much from you,\nyou’re in the right place.",
-        next: "goal",
-      },
-      goal: {
-        type: "goal",
-        headline: "Which\nare you?",
-        choices: [
-          {
-            goal: "less",
-            label: "I want to drink less",
-            imageKey: "lineChart",
-            next: "social",
-          },
-          {
-            goal: "stop",
-            label: "I want or need to stop completely",
-            imageKey: "onOffSwitch",
-            next: "benefits",
-          },
-        ],
-      },
-      social: {
-        type: "artCopy",
-        headline: "That's great.",
-        imageKey: "toast",
-        body:
-          "Alcohol is a powerful social lubricant. But consuming less is better your health— have more energy, less brain fog, and less regret.",
-        next: "willpower",
-      },
-      benefits: {
-        type: "artCopy",
-        headline: "A life without alcohol changes a lot about you",
-        headlineSize: "small",
-        imageKey: "benefitsArc",
-        body: [
-          "You’ll sleep better, have more energy, and can repair relationships with loved ones.",
-          "You’ll think more clearly, focus better, and experience improved memory, too.",
-        ],
-        next: "willpower",
-      },
-      willpower: {
-        type: "artCopy",
-        headline: "It’s Not About Willpower",
-        headlineSize: "medium",
-        imageKey: "lettingGoHand",
-        body:
-          "Trying harder to cut down doesn’t work, but the See App will show you how you access the power of choice.",
-        button: "Let’s find that!",
-        next: "catchMoment",
-      },
-      catchMoment: {
-        type: "copy",
-        headline: "Catch the moment before drinking happens.",
-        body:
-          "The See App shows you how to see the thought, urge, or automatic pull before it takes over. Then it loses its power over you.",
-        next: "drinks",
-      },
-      drinks: {
-        type: "radio",
-        headline: "How many alcoholic drinks do you have weekly?",
-        options: ["1–3", "4–7", "8–14", "15–24", "25–49", "50+"],
-        selectedIndex: null,
-        next: "scale",
-      },
-      scale: {
-        type: "scale",
-        headline: "Weekly Drinks Can Add Up Fast",
-        next: "cost",
-      },
-      cost: {
-        type: "checklist",
-        headline: "What Else Does Alcohol Cost You?",
-        body: "Pick all that apply.",
-        options: costOptions,
-        selectedIndexes: [],
-        next: "grip",
-      },
-      grip: {
-        type: "copy",
-        headline: "Less alcohol means more energy, clear thinking and control of your life.",
-        next: "sleep",
-      },
-      sleep: {
-        type: "benefit",
-        headline: "Get a Better Night’s Sleep",
-        body:
-          "Your sleep cycles improve. A better chance to rest, recover and reset.",
-        imageKey: "moon",
-        progressIndex: 0,
-        next: "energy",
-      },
-      energy: {
-        type: "benefit",
-        headline: "More Energy",
-        body:
-          "Fewer sluggish mornings. Less time wasted and more initiative throughout the day,",
-        imageKey: "lightning",
-        progressIndex: 1,
-        next: "physicalHealth",
-      },
-      physicalHealth: {
-        type: "benefit",
-        headline: "Physical Health Improves",
-        body:
-          "Your body repairs. Lower blood pressure, less inflammation, and stronger immune defense.",
-        imageKey: "heart",
-        progressIndex: 2,
-        next: "focus",
-      },
-      focus: {
-        type: "benefit",
-        headline: "Better Focus",
-        body:
-          "Your attention comes back online. You finish tasks and get things done faster.",
-        imageKey: "checklist",
-        progressIndex: 3,
-        next: "memory",
-      },
-      memory: {
-        type: "benefit",
-        headline: "Sharper Memory",
-        body:
-          "Brain fog lifts. Experience better recall and an increased sense of confidence.",
-        imageKey: "brain",
-        progressIndex: 4,
-        next: "relationships",
-      },
-      relationships: {
-        type: "benefit",
-        headline: "Improved Relationships",
-        body:
-          "Freedom from anger and increased patience with friends and loved ones — the people in your life who matter.",
-        imageKey: "relationship",
-        progressIndex: 5,
-        next: "questionsIntro",
-      },
-      questionsIntro: {
-        type: "copy",
-        headline: "But drinking can be hard to control.",
-        body:
-          "Sometimes it starts in your mind before you drink. Sometimes it happens in the moment.",
-        next: "noiseQuestion1",
-      },
-      noiseQuestion1: {
-        type: "question",
-        headline: "Do you think about drinking before you even start?",
-        body:
-          "Like picturing where you’ll be, what you’ll drink, who you’ll be with, or how you’ll feel.",
-        yes: "Yes",
-        no: "Not really",
-        next: "drinkNoise",
-      },
-      drinkNoise: {
-        type: "artCopy",
-        headline: "That’s\nDrink Noise.",
-        imageKey: "drinkNoise",
-        body: [
-          "It’s the mental chatter that pushes you toward drinking. Your mind rehearses drinking events before you ever arrive for the first sip.",
-          "You imagine social success, confidence, connection, or just fitting in with others who’ll drink too.",
-        ],
-        next: "innerTyrant",
-      },
-      innerTyrant: {
-        type: "copy",
-        headline: "The See App Separates You From the Inner Tyrant.",
-        body: "You see the thoughts as they arise and the noise loses.",
-        next: "withoutThinking",
-      },
-      withoutThinking: {
-        type: "copy",
-        headline: "But it can also happen quietly, without thinking…",
-        next: "automaticQuestion",
-      },
-      automaticQuestion: {
-        type: "question",
-        headline:
-          "When others are drinking, do you find yourself going along automatically?",
-        body: "Maybe even when you planned on NOT drinking at all",
-        yes: "Yes",
-        no: "Not usually",
-        next: "automaticDrinking",
-      },
-      automaticDrinking: {
-        type: "artCopy",
-        headline: "That’s Automatic Drinking.",
-        imageKey: "autoDrinking",
-        body:
-          "No planning ahead. No real decision. The opportunity just appears — a party, a business meeting, a night out — and you’re on autopilot.",
-        next: "catchAutomaticMoment",
-      },
-      catchAutomaticMoment: {
-        type: "copy",
-        headline: "The See App Helps you Catch That Moment.",
-        body:
-          "You begin to notice the automatic pull as it appears, before it turns into action.",
-        next: "howItWorks",
-      },
-      howItWorks: {
-        type: "copy",
-        headline: "Here’s How it Works.",
-        body:
-          "Through Non-Contemplative Meditation, you learn to see the thoughts, urges, and automatic pulls before they take over.",
-        next: "simplestMeditation",
-      },
-      simplestMeditation: {
-        type: "copy",
-        headline: "The Simplest, Most Effective Meditation on Earth.",
-        body: [
-          "One technique. Just 10 to 20 minutes, twice a day — once in the morning, and again before bed.",
-          "No mantras. No hypnosis. No breathwork. No mood music.",
-        ],
-        next: "trustedVoice",
-      },
-      trustedVoice: {
-        type: "videoCopy",
-        headline: "One Trusted Voice",
-        body:
-          "With over 40 years of experience, Dan Schwarzhoff guides you through each session of Non-Contemplative Meditation exactly as he’s practiced it for decades. Meet him here.",
-        next: "faithCompatible",
-      },
-      faithCompatible: {
-        type: "copy",
-        headline: "And It Won’t Conflict With Your Faith.",
-        body:
-          "Free from New Age narratives and Eastern philosophy, Non-Contemplative meditation is completely compatible across Christian denominations.",
-        next: "choiceRestored",
-      },
-      choiceRestored: {
-        type: "copy",
-        headline: "The Power of Choice Is Restored.",
-        body:
-          "The pull to drink weakens, and you stop doing what you don’t want to do, and can choose to drink less/eliminate alcohol from your life.",
-      },
-    },
-    overview: [
-      { screen: "welcome", label: "1" },
-      { screen: "goal", label: "2" },
-      { screen: "social", label: "3A · Drink less" },
-      { screen: "benefits", label: "3B · Stop completely" },
-      { screen: "willpower", label: "4" },
-      { screen: "catchMoment", label: "5" },
-      { screen: "drinks", label: "6" },
-      { screen: "scale", label: "7" },
-      { screen: "cost", label: "8" },
-      { screen: "grip", label: "9" },
-      { screen: "sleep", label: "10A" },
-      { screen: "energy", label: "10B" },
-      { screen: "physicalHealth", label: "10C" },
-      { screen: "focus", label: "10D" },
-      { screen: "memory", label: "10E" },
-      { screen: "relationships", label: "10F" },
-      { screen: "questionsIntro", label: "11" },
-      { screen: "noiseQuestion1", label: "12" },
-      { screen: "drinkNoise", label: "13" },
-      { screen: "innerTyrant", label: "14" },
-      { screen: "withoutThinking", label: "15" },
-      { screen: "automaticQuestion", label: "16" },
-      { screen: "automaticDrinking", label: "17" },
-      { screen: "catchAutomaticMoment", label: "18" },
-      { screen: "howItWorks", label: "19" },
-      { screen: "simplestMeditation", label: "20" },
-      { screen: "trustedVoice", label: "21" },
-      { screen: "faithCompatible", label: "22" },
-      { screen: "choiceRestored", label: "23" },
-    ],
-  };
+  return flow;
 })();
