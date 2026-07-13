@@ -379,7 +379,7 @@
       <div data-screen-host></div>
     </main>
 
-    <script src="flow-data.js?v=20260712-image-preload"></script>
+    <script src="flow-data.js?v=20260713-pattern-branches"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const host = document.querySelector("[data-screen-host]");
@@ -391,6 +391,10 @@
       const cameFromOverview = params.get("from") === "overview";
       let active = flow.screens[requestedScreen] ? requestedScreen : flow.firstScreen;
       let goal = null;
+      const patternAnswers = {
+        drinkNoise: null,
+        automaticDrinking: null,
+      };
       let drinkIndex = flow.screens.drinks.selectedIndex;
       const selectedCostIndexes = new Set(flow.screens.cost.selectedIndexes || []);
       const defaultBenefitScreens = ["sleep", "energy", "physicalHealth", "focus", "memory", "relationships"];
@@ -551,8 +555,8 @@
               <h1 class="headline ${screen.headlineSize || "medium"}">${lineBreaks(screen.headline)}</h1>
               ${bodyMarkup(screen.body)}
               <div class="answer-row">
-                <button class="answer-choice" type="button" data-answer>${escapeHtml(screen.yes)}</button>
-                <button class="answer-choice" type="button" data-answer>${escapeHtml(screen.no)}</button>
+                <button class="answer-choice" type="button" data-answer="yes">${escapeHtml(screen.yes)}</button>
+                <button class="answer-choice" type="button" data-answer="no">${escapeHtml(screen.no)}</button>
               </div>
             </div>
           </section>
@@ -613,8 +617,26 @@
         `;
       }
 
-      function renderScreen() {
+      function resolvedScreen() {
         const screen = flow.screens[active];
+        if (!screen) return null;
+
+        if (active === "withoutThinking" && patternAnswers.drinkNoise === false) {
+          return { ...screen, ...flow.copyVariants.withoutThinkingDirect };
+        }
+
+        if (active === "catchAutomaticMoment" && patternAnswers.automaticDrinking === false) {
+          const variant = patternAnswers.drinkNoise
+            ? flow.copyVariants.catchThoughts
+            : flow.copyVariants.catchUnrecognizedPattern;
+          return { ...screen, ...variant };
+        }
+
+        return screen;
+      }
+
+      function renderScreen() {
+        const screen = resolvedScreen();
         if (!screen) return "";
         if (screen.type === "goal") return renderGoal(screen);
         if (screen.type === "radio") return renderRadio(screen);
@@ -675,10 +697,29 @@
       }
 
       function continueFromCurrent() {
-        const screen = flow.screens[active];
+        const screen = resolvedScreen();
         if (!screen) return;
         if (screen.type === "goal") return;
         goTo(nextFromCurrent(screen));
+      }
+
+      function answerCurrent(answer) {
+        const answeredYes = answer === "yes";
+
+        if (active === "noiseQuestion1") {
+          patternAnswers.drinkNoise = answeredYes;
+          patternAnswers.automaticDrinking = null;
+          goTo(answeredYes ? "drinkNoise" : "withoutThinking");
+          return;
+        }
+
+        if (active === "automaticQuestion") {
+          patternAnswers.automaticDrinking = answeredYes;
+          goTo(answeredYes ? "automaticDrinking" : "catchAutomaticMoment");
+          return;
+        }
+
+        continueFromCurrent();
       }
 
       function draw() {
@@ -715,7 +756,10 @@
         host.querySelectorAll("[data-answer]").forEach((button) => {
           button.addEventListener("click", () => {
             button.classList.add("is-selected");
-            window.setTimeout(continueFromCurrent, 120);
+            host.querySelectorAll("[data-answer]").forEach((answerButton) => {
+              answerButton.style.pointerEvents = "none";
+            });
+            window.setTimeout(() => answerCurrent(button.dataset.answer), 120);
           });
         });
 

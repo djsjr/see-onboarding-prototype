@@ -28,6 +28,28 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "dailyCaloriesHigh": 430,
     "yearlyPounds": 35
   },
+  "copyVariants": {
+    "withoutThinkingDirect": {
+      "page": "15",
+      "headline": "Sometimes There Is No Noise."
+    },
+    "catchThoughts": {
+      "page": "18",
+      "headline": "Catch the Thoughts.",
+      "body": [
+        "The See App helps you notice the thoughts and urges before they take over.",
+        "Awareness arrives first. Then choice becomes possible."
+      ]
+    },
+    "catchUnrecognizedPattern": {
+      "page": "18",
+      "headline": "Not Every Pattern Feels Like a Pattern.",
+      "body": [
+        "Whether drinking feels deliberate or automatic, what leads to it can be easy to miss. The See App helps you see it more clearly.",
+        "Awareness arrives first. Then choice becomes possible."
+      ]
+    }
+  },
   "screens": {
     "welcome": {
       "page": "1",
@@ -283,8 +305,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "automaticQuestion": {
       "page": "16",
       "type": "question",
-      "headline": "When other people are drinking, do you automatically join in?",
-      "body": "Even when you planned not to drink at all?",
+      "headline": "Do you ever drink without thinking it through?",
+      "body": "Maybe when others are drinking, or even when you're alone. You might plan against it, but it happens before you realize.",
       "yes": "Yes",
       "no": "Not usually",
       "next": "automaticDrinking"
