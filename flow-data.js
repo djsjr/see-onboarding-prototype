@@ -31,7 +31,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
   "copyVariants": {
     "withoutThinkingDirect": {
       "page": "15",
-      "headline": "Sometimes There Is No Noise."
+      "headline": "Sometimes There Are No Thoughts."
     },
     "catchThoughts": {
       "page": "18",
@@ -54,8 +54,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "welcome": {
       "page": "1",
       "type": "copy",
-      "headline": "When alcohol starts taking more than it gives, it’s time for something different.",
-      "body": [],
+      "headline": "Take Back Control From Alcohol.",
+      "body": "If drinking is taking too much from you, you’re in the right place.",
       "button": "Continue",
       "next": "goal"
     },
@@ -117,7 +117,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "catchMoment": {
       "page": "5",
       "type": "copy",
-      "headline": "Catch the moment before it happens.",
+      "headline": "You can catch the moment before it happens.",
       "headlineSize": "size-44",
       "body": [
         "Drinking begins with a thought, an urge automatically steering you toward alcohol.",
@@ -146,7 +146,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "scale": {
       "page": "7",
       "type": "scale",
-      "headline": "That Adds Up. Fast!",
+      "headline": "Weekly Drinks Can Add Up Fast",
+      "headlineSize": "size-46",
       "body": [
         "At 40 drinks a week, alcohol alone can add roughly 4,000–6,000 calories every week.",
         "And calories are only a small part of the total cost."
@@ -265,7 +266,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "12",
       "type": "question",
       "headline": "Do you think about drinking before you start?",
-      "body": "You may picture where you’ll be, what you’ll drink, who you’ll be with, or how drinking will make you feel.",
+      "body": "Like where you’ll be, who you’ll be with, what you’ll drink, or how it'll make you feel?",
       "yes": "Yes",
       "no": "Not really",
       "next": "drinkNoise"
@@ -297,7 +298,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "withoutThinking": {
       "page": "15",
       "type": "copy",
-      "headline": "But Sometimes There Is No Noise.",
+      "headline": "But Sometimes There Are No Thoughts.",
       "body": "No debate. No plan. No conscious decision. You simply find yourself reaching for the drink without thinking.",
       "button": "Continue",
       "next": "automaticQuestion"
@@ -306,7 +307,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "16",
       "type": "question",
       "headline": "Do you ever drink without thinking it through?",
-      "body": "Maybe when others are drinking, or even when you're alone. You might plan against it, but it happens before you realize.",
+      "body": "When others are drinking, or even when you're alone. You might even plan against it.",
       "yes": "Yes",
       "no": "Not usually",
       "next": "automaticDrinking"
@@ -327,7 +328,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "catchAutomaticMoment": {
       "page": "18",
       "type": "copy",
-      "headline": "Catch the moment.",
+      "headline": "Learn How to Catch the Moment.",
       "body": [
         "The See App helps you notice the automatic pull toward drinking as it’s happening—before it turns into action.",
         "Awareness arrives first. Then choice becomes possible."
