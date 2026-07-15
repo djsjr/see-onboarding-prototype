@@ -54,7 +54,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "welcome": {
       "page": "1",
       "type": "copy",
-      "headline": "Take Back Control From Alcohol.",
+      "headline": "Put Alcohol Back in Its Place.",
       "body": "If drinking is taking too much from you, you’re in the right place.",
       "button": "Continue",
       "next": "goal"
