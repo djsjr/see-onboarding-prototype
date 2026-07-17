@@ -298,7 +298,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "withoutThinking": {
       "page": "15",
       "type": "copy",
-      "headline": "But Sometimes There Are No Thoughts.",
+      "headline": "But Sometimes There Is No Noise.",
       "body": "No debate. No plan. No conscious decision. You simply find yourself reaching for the drink without thinking.",
       "button": "Continue",
       "next": "automaticQuestion"
@@ -330,7 +330,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "copy",
       "headline": "Learn How to Catch the Moment.",
       "body": [
-        "The See App helps you notice the automatic pull toward drinking as it’s happening—before it turns into action.",
+        "The See App helps you notice the automatic push toward drinking as it’s happening—before it turns into action.",
         "Awareness arrives first. Then choice becomes possible."
       ],
       "button": "Continue",
@@ -347,10 +347,10 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "simplestMeditation": {
       "page": "20",
       "type": "copy",
-      "headline": "Meditation, simplified.",
+      "headline": "The Simplest, Most Effective Meditation on Earth.",
       "body": [
-        "One method. Just 10–20 minutes, twice a day—once in the morning and again before bed.",
-        "No mantras. No hypnosis. No breathwork. No mood bending music or sound effects."
+        "One technique. Just 10 to 20 minutes, twice a day — once in the morning, and again before bed.",
+        "No mantras. No hypnosis. No breathwork. No mood music."
       ],
       "button": "Continue",
       "next": "trustedVoice"
