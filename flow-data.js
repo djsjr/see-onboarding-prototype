@@ -340,7 +340,6 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "19",
       "type": "videoCopy",
       "headline": "Here’s how it works.",
-      "body": "The See App features a technique called Non-Contemplative Meditation, which allows you to see the urge to drink before it takes control.",
       "videoSrc": "assets/videos/onboarding_alc_video.mp4",
       "videoPoster": "assets/videos/onboarding_alc_video_poster.jpg",
       "videoWidth": 720,
