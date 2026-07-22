@@ -338,9 +338,14 @@ window.SEE_ONBOARDING_FLOW = (() => {
     },
     "howItWorks": {
       "page": "19",
-      "type": "copy",
+      "type": "videoCopy",
       "headline": "Here’s how it works.",
-      "body": "Non-Contemplative Meditation allows you to notice urges and drive to automatically drink before they take control, before you are carried away by thoughts.",
+      "body": "The See App features a technique called Non-Contemplative Meditation, which allows you to see the urge to drink before it takes control.",
+      "videoSrc": "assets/videos/onboarding_alc_video.mp4",
+      "videoPoster": "assets/videos/onboarding_alc_video_poster.jpg",
+      "videoWidth": 720,
+      "videoHeight": 1280,
+      "videoLabel": "How Non-Contemplative Meditation works",
       "button": "Continue",
       "next": "simplestMeditation"
     },
@@ -357,15 +362,13 @@ window.SEE_ONBOARDING_FLOW = (() => {
     },
     "trustedVoice": {
       "page": "21",
-      "type": "videoCopy",
+      "type": "copy",
       "headline": "One voice. Decades of experience.",
       "headlineSize": "size-44",
       "body": [
         "Dan Schwarzhoff has practiced Non-Contemplative Meditation for more than 40 years.",
         "A recovered alcoholic and former drug abuser, he understands the desire and need that drives obsession from experience—and the way out. He guides every session exactly as he has taught thousands and practices himself."
       ],
-      "videoLabel": "Video",
-      "videoCta": "Meet Dan",
       "button": "Continue",
       "next": "faithCompatible"
     },

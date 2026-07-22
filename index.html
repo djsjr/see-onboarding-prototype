@@ -270,6 +270,62 @@
         box-shadow: 0 8px 18px rgba(37, 35, 35, 0.24);
       }
 
+      .video-player-shell {
+        position: relative;
+        width: 100%;
+        aspect-ratio: var(--video-aspect-ratio);
+        margin: 22px auto 6px;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #000;
+        box-shadow: 0 8px 18px rgba(37, 35, 35, 0.24);
+      }
+
+      .video-player-shell.is-portrait {
+        width: min(64%, 240px);
+      }
+
+      .onboarding-video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+
+      .video-play-button {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .video-play-button::before {
+        content: "";
+        width: 0;
+        height: 0;
+        margin-left: 4px;
+        border-top: 14px solid transparent;
+        border-bottom: 14px solid transparent;
+        border-left: 22px solid var(--light);
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.65));
+      }
+
+      .video-play-button:focus-visible {
+        outline: 3px solid var(--light);
+        outline-offset: -6px;
+      }
+
+      .video-play-button[hidden] {
+        display: none;
+      }
+
       .impact-progress {
         display: flex;
         gap: 4px;
@@ -379,7 +435,7 @@
       <div data-screen-host></div>
     </main>
 
-    <script src="flow-data.js?v=20260716-copy-update"></script>
+    <script src="flow-data.js?v=20260722-page19-video"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const host = document.querySelector("[data-screen-host]");
@@ -576,12 +632,41 @@
       }
 
       function renderVideoCopy(screen) {
+        const videoWidth = Number(screen.videoWidth) || 16;
+        const videoHeight = Number(screen.videoHeight) || 9;
+        const orientationClass = videoHeight > videoWidth ? "is-portrait" : "";
+        const videoMarkup = screen.videoSrc
+          ? `
+              <div
+                class="video-player-shell ${orientationClass}"
+                style="--video-aspect-ratio: ${videoWidth} / ${videoHeight}"
+              >
+                <video
+                  class="onboarding-video"
+                  playsinline
+                  preload="metadata"
+                  poster="${escapeHtml(screen.videoPoster || "")}"
+                  aria-label="${escapeHtml(screen.videoLabel || screen.headline || "Onboarding video")}"
+                >
+                  <source src="${escapeHtml(screen.videoSrc)}" type="video/mp4" />
+                  Your browser does not support HTML video.
+                </video>
+                <button
+                  class="video-play-button"
+                  type="button"
+                  data-video-play
+                  aria-label="Play ${escapeHtml(screen.videoLabel || "onboarding video")}"
+                ></button>
+              </div>
+            `
+          : `<div class="video-placeholder">${escapeHtml(screen.videoLabel || "VIDEO")}</div>`;
+
         return `
           <section class="screen is-active" data-screen="${active}">
             <div class="content-center">
               <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              ${videoMarkup}
               ${bodyMarkup(screen.body)}
-              <div class="video-placeholder">VIDEO</div>
             </div>
             ${buttonMarkup(screen.button)}
           </section>
@@ -760,6 +845,22 @@
               answerButton.style.pointerEvents = "none";
             });
             window.setTimeout(() => answerCurrent(button.dataset.answer), 120);
+          });
+        });
+
+        host.querySelectorAll("[data-video-play]").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const video = button.parentElement?.querySelector("video");
+            if (!video) return;
+
+            button.hidden = true;
+            video.controls = true;
+            try {
+              await video.play();
+            } catch (_) {
+              video.controls = false;
+              button.hidden = false;
+            }
           });
         });
 
