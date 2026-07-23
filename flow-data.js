@@ -1,5 +1,5 @@
 window.SEE_ONBOARDING_FLOW = (() => {
-  const assetBase = window.SEE_FLOW_ASSET_BASE || "assets";
+  const assetBase = window.SEE_FLOW_ASSET_BASE || "../assets";
   const image = (name) => `${assetBase}/images/${name}`;
   const flow = {
   "version": "revised",
@@ -339,11 +339,12 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "howItWorks": {
       "page": "19",
       "type": "videoCopy",
-      "headline": "Here’s how it works.",
+      "headline": "Dan explains\nhow it works",
+      "headlineSize": "size-44",
       "videoSrc": "assets/videos/onboarding_alc_video.mp4",
       "videoPoster": "assets/videos/onboarding_alc_video_poster.jpg",
       "videoWidth": 720,
-      "videoHeight": 1280,
+      "videoHeight": 1100,
       "videoLabel": "How Non-Contemplative Meditation works",
       "button": "Continue",
       "next": "simplestMeditation"

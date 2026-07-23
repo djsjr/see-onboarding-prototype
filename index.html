@@ -7,13 +7,13 @@
     <style>
       @font-face {
         font-family: "Gilroy";
-        src: url("assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
+        src: url("../assets/fonts/Gilroy-ExtraBold.otf") format("opentype");
         font-weight: 800;
       }
 
       @font-face {
         font-family: "Public Sans";
-        src: url("assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
+        src: url("../assets/fonts/PublicSans-SemiBold.ttf") format("truetype");
         font-weight: 800;
       }
 
@@ -59,7 +59,7 @@
         width: min(var(--phone-width), 100vw);
         height: min(var(--phone-height), 100vh);
         overflow: hidden;
-        background: #ffe68e url("assets/images/background_yellow.png") center/cover no-repeat;
+        background: #ffe68e url("../assets/images/background_yellow.png") center/cover no-repeat;
         box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
       }
 
@@ -327,6 +327,46 @@
 
       .video-play-button[hidden] {
         display: none;
+      }
+
+      .video-timestamp[hidden] {
+        display: none;
+      }
+
+      .screen.video-copy .primary-button {
+        width: 76%;
+        min-height: 44px;
+        align-self: center;
+        font-size: 15px;
+      }
+
+      .screen.video-copy .content-center {
+        justify-content: flex-start;
+        padding-top: 50px;
+        padding-bottom: 40px;
+      }
+
+      .screen.video-copy .subhead {
+        margin: 10px 0 0 2px;
+        color: var(--blue);
+        font: 800 14px/1.18 "Public Sans", sans-serif;
+      }
+
+      .screen.video-copy .video-player-shell {
+        margin: 10px auto 0;
+      }
+
+      .video-timestamp {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        z-index: 2;
+        padding: 4px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        font: 400 12px/1 "Arial", sans-serif;
+        pointer-events: none;
       }
 
       .impact-progress {
@@ -660,14 +700,16 @@
                   data-video-play
                   aria-label="Play ${escapeHtml(screen.videoLabel || "onboarding video")}"
                 ></button>
+                <span class="video-timestamp" data-video-timestamp>1:30</span>
               </div>
             `
           : `<div class="video-placeholder">${escapeHtml(screen.videoLabel || "VIDEO")}</div>`;
 
         return `
-          <section class="screen is-active" data-screen="${active}">
+          <section class="screen video-copy is-active" data-screen="${active}">
             <div class="content-center">
               <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              ${screen.subhead ? `<p class="subhead">${lineBreaks(screen.subhead)}</p>` : ""}
               ${videoMarkup}
               ${bodyMarkup(screen.body)}
             </div>
@@ -854,15 +896,18 @@
         host.querySelectorAll("[data-video-play]").forEach((button) => {
           button.addEventListener("click", async () => {
             const video = button.parentElement?.querySelector("video");
+            const timestamp = button.parentElement?.querySelector("[data-video-timestamp]");
             if (!video) return;
 
             button.hidden = true;
+            if (timestamp) timestamp.hidden = true;
             video.controls = true;
             try {
               await video.play();
             } catch (_) {
               video.controls = false;
               button.hidden = false;
+              if (timestamp) timestamp.hidden = false;
             }
           });
         });
