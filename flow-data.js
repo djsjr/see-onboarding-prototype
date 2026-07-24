@@ -1,5 +1,5 @@
 window.SEE_ONBOARDING_FLOW = (() => {
-  const assetBase = window.SEE_FLOW_ASSET_BASE || "../assets";
+  const assetBase = window.SEE_FLOW_ASSET_BASE || "assets";
   const image = (name) => `${assetBase}/images/${name}`;
   const flow = {
   "version": "revised",
