@@ -19,7 +19,9 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "brain": "brain.png",
     "relationship": "relationship.png",
     "drinkNoise": "drink_noise_simple.png",
-    "autoDrinking": "bottle_grab.png"
+    "autoDrinking": "bottle_grab.png",
+    "danPhoto": "dan_schwarzhoff.png",
+    "faith": "bible_cross_scroll.png"
   },
   "firstScreen": "welcome",
   "sampleScale": {
@@ -354,8 +356,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "copy",
       "headline": "The Simplest, Most Effective Meditation on Earth.",
       "body": [
-        "One technique. Just 10 to 20 minutes, twice a day — once in the morning, and again before bed.",
-        "No mantras. No hypnosis. No breathwork. No mood music."
+        "10 minutes. Twice a day.",
+        "No mantras. No hypnosis. No breathwork. No mood music or sound effects. Nothing to learn. Just to see."
       ],
       "button": "Continue",
       "next": "trustedVoice"
@@ -363,20 +365,26 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "trustedVoice": {
       "page": "21",
       "type": "copy",
-      "headline": "One voice. Decades of experience.",
+      "headline": "One Voice. Decades of Experience.",
       "headlineSize": "size-44",
+      "imageKey": "danPhoto",
+      "imageShape": "portrait",
       "body": [
-        "Dan Schwarzhoff has practiced Non-Contemplative Meditation for more than 40 years.",
-        "A recovered alcoholic and former drug abuser, he understands the desire and need that drives obsession from experience—and the way out. He guides every session exactly as he has taught thousands and practices himself."
+        "Dan Schwarzhoff guides each session of Non-Contemplative Meditation using the same approach he's taught to thousands.",
+        "Alcohol-free for more than 30 years, Dan understands the obsession with drinking from personal experience — but also the solution."
       ],
       "button": "Continue",
       "next": "faithCompatible"
     },
     "faithCompatible": {
       "page": "22",
-      "type": "copy",
-      "headline": "And It Won’t Conflict With Your Faith.",
-      "body": "Free from New Age narratives and Eastern philosophy, Non-Contemplative meditation is completely compatible across Christian denominations. Even spiritual recovery fellowships.",
+      "type": "artCopy",
+      "headline": "Won’t Conflict With Your Faith.",
+      "imageKey": "faith",
+      "body": [
+        "No New Age narratives. No Eastern philosophy.",
+        "Works within Christian and Jewish faiths, even alongside spiritual recovery fellowships."
+      ],
       "button": "Continue",
       "next": "choiceRestored"
     },

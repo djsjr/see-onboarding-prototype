@@ -257,6 +257,28 @@
         margin: 30px auto;
       }
 
+      .portrait-photo {
+        display: block;
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 10px auto 0;
+        box-shadow: 0 8px 18px rgba(37, 35, 35, 0.22);
+      }
+
+      .screen[data-screen="trustedVoice"] .headline + .body {
+        margin-top: 30px;
+      }
+
+      .screen[data-screen="faithCompatible"] .art {
+        margin-bottom: 0;
+      }
+
+      .screen[data-screen="faithCompatible"] .body {
+        color: var(--blue);
+      }
+
       .video-placeholder {
         width: 100%;
         aspect-ratio: 16 / 9;
@@ -663,11 +685,19 @@
       }
 
       function renderCopy(screen) {
+        const imageMarkup = screen.imageKey
+          ? `<img class="${screen.imageShape === "portrait" ? "portrait-photo" : "art"}" src="${flow.assets[screen.imageKey]}" alt="" loading="eager" decoding="async" />`
+          : "";
+        const imageBeforeBody = screen.imageShape === "portrait" ? "" : imageMarkup;
+        const imageAfterBody = screen.imageShape === "portrait" ? imageMarkup : "";
+
         return `
           <section class="screen is-active" data-screen="${active}">
             <div class="content-center">
               <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+              ${imageBeforeBody}
               ${bodyMarkup(screen.body)}
+              ${imageAfterBody}
             </div>
             ${buttonMarkup(screen.button)}
           </section>
