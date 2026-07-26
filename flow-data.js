@@ -383,7 +383,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "imageKey": "faith",
       "body": [
         "No New Age narratives. No Eastern philosophy.",
-        "Works within Christian and Jewish faiths, even alongside spiritual recovery fellowships."
+        "Works within your faith, and even alongside spiritual recovery fellowships."
       ],
       "button": "Continue",
       "next": "choiceRestored"
