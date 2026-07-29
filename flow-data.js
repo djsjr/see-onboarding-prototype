@@ -343,7 +343,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "videoCopy",
       "headline": "Dan explains\nhow it works",
       "headlineSize": "size-44",
-      "videoSrc": "https://firebasestorage.googleapis.com/v0/b/see-app-6a9bc.appspot.com/o/alc_onboarding.mp4?alt=media&token=e2b540fe-8487-426c-8168-14342af8dbcb",
+      "videoSrc": "https://firebasestorage.googleapis.com/v0/b/see-app-6a9bc.appspot.com/o/alc_onboarding_video.mp4?alt=media&token=92a3c518-a08b-491c-a78c-f74a5434bf32",
       "videoPoster": "assets/videos/onboarding_alc_video_poster.jpg",
       "videoWidth": 720,
       "videoHeight": 1280,
