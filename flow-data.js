@@ -343,10 +343,11 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "videoCopy",
       "headline": "Dan explains\nhow it works",
       "headlineSize": "size-44",
-      "videoSrc": "assets/videos/onboarding_alc_video.mp4",
+      "videoSrc": "https://firebasestorage.googleapis.com/v0/b/see-app-6a9bc.appspot.com/o/alc_onboarding.mp4?alt=media&token=e2b540fe-8487-426c-8168-14342af8dbcb",
       "videoPoster": "assets/videos/onboarding_alc_video_poster.jpg",
       "videoWidth": 720,
-      "videoHeight": 1100,
+      "videoHeight": 1280,
+      "videoDurationLabel": "1:53",
       "videoLabel": "How Non-Contemplative Meditation works",
       "button": "Continue",
       "next": "simplestMeditation"

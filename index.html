@@ -743,7 +743,11 @@
                   data-video-play
                   aria-label="Play ${escapeHtml(screen.videoLabel || "onboarding video")}"
                 ></button>
-                <span class="video-timestamp" data-video-timestamp>1:30</span>
+                ${
+                  screen.videoDurationLabel
+                    ? `<span class="video-timestamp" data-video-timestamp>${escapeHtml(screen.videoDurationLabel)}</span>`
+                    : ""
+                }
               </div>
             `
           : `<div class="video-placeholder">${escapeHtml(screen.videoLabel || "VIDEO")}</div>`;
