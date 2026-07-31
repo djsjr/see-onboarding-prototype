@@ -1,5 +1,5 @@
 window.SEE_ONBOARDING_FLOW = (() => {
-  const assetBase = window.SEE_FLOW_ASSET_BASE || "assets";
+  const assetBase = window.SEE_FLOW_ASSET_BASE || "../assets";
   const image = (name) => `${assetBase}/images/${name}`;
   const flow = {
   "version": "revised",
@@ -97,8 +97,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "headlineSize": "medium",
       "imageKey": "benefitsArc",
       "body": [
-        "You sleep better. Think more clearly. Feel more energy. You can repair relationships with loved ones.",
-        "You start becoming yourself again with better focus and improved memory too."
+        "Sleep better, think more clearly, have more energy, and repair relationships with loved ones.",
+        "Start becoming yourself again."
       ],
       "button": "Continue",
       "next": "willpower"
@@ -110,8 +110,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "headlineSize": "medium",
       "imageKey": "lettingGoHand",
       "body": [
-        "The problem isn’t that you haven’t tried hard enough to cut down.",
-        "The See App shows you access to a space within between the urge and the action—where choice is restored. No willpower needed at all."
+        "The problem isn’t that you need to try harder.",
+        "The See App helps you to access to a space within where choice is restored, naturally"
       ],
       "button": "Let’s find it",
       "next": "catchMoment"
@@ -123,8 +123,16 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "headlineSize": "size-44",
       "body": [
         "Drinking begins with a thought, an urge automatically steering you toward alcohol.",
-        "See those moments before they take over and they lose their power over you. The See App shows you exactly how."
+        "See those moments before they take over, and they lose their power over you."
       ],
+      "button": "Continue",
+      "next": "butFirst"
+    },
+    "butFirst": {
+      "page": "5.1",
+      "type": "copy",
+      "headline": "But\nfirst...",
+      "headlineSize": "size-101",
       "button": "Continue",
       "next": "drinks"
     },
@@ -182,8 +190,9 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "grip": {
       "page": "9",
       "type": "copy",
-      "headline": "Less Alcohol Means More You.",
-      "body": "More energy, clear thinking and control of your life.",
+      "headline": "Less Alcohol Means More",
+      "headlineEmphasis": "YOU.",
+      "headlineSize": "size-46",
       "button": "Continue",
       "next": "sleep"
     },
@@ -192,10 +201,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "benefit",
       "headline": "Get a Better Night’s Sleep",
       "headlineSize": "size-46",
-      "body": [
-        "Less alcohol gives your natural sleep cycles a better chance to work.",
-        "Rest more deeply. Recover more fully. Wake up ready."
-      ],
+      "body": "Give your natural sleep cycles a better chance to work. Rest deeply, recover fully, and wake up ready.",
       "imageKey": "moon",
       "progressIndex": 0,
       "button": "Continue",
@@ -260,7 +266,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "11",
       "type": "copy",
       "headline": "But Drinking Feels Difficult to Control",
-      "body": "Because it can begin before the first drink. Sometimes it starts in your thoughts. Sometimes it happens automatically in the moment.",
+      "body": "Because it always begins before the first drink.",
       "button": "Continue",
       "next": "noiseQuestion1"
     },
@@ -289,9 +295,9 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "innerTyrant": {
       "page": "14",
       "type": "copy",
-      "headline": "The See App Separates You from the Inner Tyrant.",
+      "headline": "The See App Separates You from the Noise.",
       "body": [
-        "You are guided to learning how to observe thoughts without automatically obeying them.",
+        "Discover how to observe thoughts without automatically obeying them.",
         "Once you see them, they no longer control what happens next. You do."
       ],
       "button": "Continue",
@@ -300,8 +306,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "withoutThinking": {
       "page": "15",
       "type": "copy",
-      "headline": "But Sometimes There Is No Noise.",
-      "body": "No debate. No plan. No conscious decision. You simply find yourself reaching for the drink without thinking.",
+      "headline": "But Sometimes There Is No Noise...",
       "button": "Continue",
       "next": "automaticQuestion"
     },
@@ -424,6 +429,10 @@ window.SEE_ONBOARDING_FLOW = (() => {
     {
       "screen": "catchMoment",
       "label": "5"
+    },
+    {
+      "screen": "butFirst",
+      "label": "5.1"
     },
     {
       "screen": "drinks",
