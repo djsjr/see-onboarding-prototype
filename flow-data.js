@@ -21,7 +21,8 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "drinkNoise": "drink_noise_simple.png",
     "autoDrinking": "bottle_grab.png",
     "danPhoto": "dan_schwarzhoff.png",
-    "faith": "bible_cross_scroll.png"
+    "faith": "bible_cross_scroll.png",
+    "meditatingHands": "meditating_hands.png"
   },
   "firstScreen": "welcome",
   "sampleScale": {
@@ -361,6 +362,10 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "page": "20",
       "type": "copy",
       "headline": "The Simplest, Most Effective Meditation on Earth.",
+      "imageKey": "meditatingHands",
+      "imageScale": 0.7,
+      "imageAfterBodyIndex": 0,
+      "imageAfterSpacing": 10,
       "body": [
         "10 minutes. Twice a day.",
         "No mantras. No hypnosis. No breathwork. No mood music or sound effects. Nothing to learn. Just to see."
@@ -401,6 +406,31 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "body": [
         "The desire for the effect of alcohol weakens. Drink conditioning melts. Alcohol loses. And you win.",
         "You become able to do what you want to do: Drink less—or stop completely. Your choice."
+      ],
+      "button": "Continue",
+      "next": "socialProof"
+    },
+    "socialProof": {
+      "page": "23.1",
+      "type": "reviews",
+      "headline": "Don’t just take\nour word for it...",
+      "headlineSize": "size-40",
+      "reviews": [
+        {
+          "quote": "I forgot I even wanted to drink. That never happened before.",
+          "emphasis": "I forgot I even wanted to drink.",
+          "attribution": "Kimi, London, Ohio"
+        },
+        {
+          "quote": "This app made quitting easier. I’m more awake, aware, and clear-headed than ever.",
+          "emphasis": "This app made quitting easier.",
+          "attribution": "Matt, Bremen, Germany"
+        },
+        {
+          "quote": "Since I stopped drinking, my mood lifted. I’m healthier and happier. This is the real deal.",
+          "emphasis": "Since I stopped drinking, my mood lifted.",
+          "attribution": "Lindy, Menominee, Michigan"
+        }
       ],
       "button": "Continue"
     }
@@ -525,6 +555,10 @@ window.SEE_ONBOARDING_FLOW = (() => {
     {
       "screen": "choiceRestored",
       "label": "23"
+    },
+    {
+      "screen": "socialProof",
+      "label": "23.1"
     }
   ]
 };

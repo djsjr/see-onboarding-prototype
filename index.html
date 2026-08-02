@@ -167,6 +167,53 @@
         color: var(--dark);
       }
 
+      .social-proof-content {
+        justify-content: flex-start;
+        overflow: auto;
+        padding: 18px 0;
+      }
+
+      .social-proof-group {
+        margin: auto 0;
+      }
+
+      .social-proof .headline {
+        font-size: 40px;
+      }
+
+      .review-stack {
+        display: grid;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .review-card {
+        border-radius: 30px;
+        background: #fff;
+        padding: 16px 20px 18px;
+      }
+
+      .review-quote,
+      .review-attribution {
+        margin: 0;
+        color: var(--dark);
+        font: 800 16px/1.28 "Public Sans", sans-serif;
+      }
+
+      .review-highlight {
+        color: var(--blue);
+      }
+
+      .review-attribution {
+        margin-top: 10px;
+        text-align: right;
+      }
+
+      .social-proof .primary-button {
+        width: 92%;
+        margin: 0 auto;
+      }
+
       .primary-button {
         width: 100%;
         min-height: 56px;
@@ -523,7 +570,7 @@
       <div data-screen-host></div>
     </main>
 
-    <script src="flow-data.js?v=20260730-copy-update"></script>
+    <script src="flow-data.js?v=20260802-social-proof"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const host = document.querySelector("[data-screen-host]");
@@ -708,11 +755,45 @@
       }
 
       function renderCopy(screen) {
+        const imageScale =
+          Number.isFinite(Number(screen.imageScale)) && Number(screen.imageScale) > 0
+            ? Number(screen.imageScale)
+            : 1;
+        const imageStyle =
+          screen.imageShape !== "portrait" && imageScale !== 1
+            ? ` style="width: ${72 * imageScale}%; height: ${245 * imageScale}px${
+                Number.isFinite(Number(screen.imageAfterSpacing))
+                  ? `; margin-bottom: ${Number(screen.imageAfterSpacing)}px`
+                  : ""
+              }"`
+            : "";
         const imageMarkup = screen.imageKey
-          ? `<img class="${screen.imageShape === "portrait" ? "portrait-photo" : "art"}" src="${flow.assets[screen.imageKey]}" alt="" loading="eager" decoding="async" />`
+          ? `<img class="${screen.imageShape === "portrait" ? "portrait-photo" : "art"}" src="${flow.assets[screen.imageKey]}" alt="" loading="eager" decoding="async"${imageStyle} />`
           : "";
-        const imageBeforeBody = screen.imageShape === "portrait" ? "" : imageMarkup;
+        const imageAfterBodyIndex = Number.isInteger(screen.imageAfterBodyIndex)
+          ? screen.imageAfterBodyIndex
+          : null;
+        const imageBeforeBody =
+          screen.imageShape === "portrait" || imageAfterBodyIndex !== null
+            ? ""
+            : imageMarkup;
         const imageAfterBody = screen.imageShape === "portrait" ? imageMarkup : "";
+        const bodyItems = screen.body
+          ? Array.isArray(screen.body)
+            ? screen.body
+            : [screen.body]
+          : [];
+        const bodyContent =
+          imageAfterBodyIndex === null
+            ? bodyMarkup(screen.body)
+            : bodyItems
+                .map(
+                  (item, index) =>
+                    `<p class="body">${lineBreaks(item)}</p>${
+                      index === imageAfterBodyIndex ? imageMarkup : ""
+                    }`
+                )
+                .join("");
 
         return `
           <section class="screen is-active" data-screen="${active}">
@@ -723,7 +804,7 @@
                   : ""
               }</h1>
               ${imageBeforeBody}
-              ${bodyMarkup(screen.body)}
+              ${bodyContent}
               ${imageAfterBody}
             </div>
             ${buttonMarkup(screen.button)}
@@ -808,6 +889,35 @@
         `;
       }
 
+      function renderReviews(screen) {
+        return `
+          <section class="screen social-proof is-active" data-screen="${active}">
+            <div class="content-center social-proof-content">
+              <div class="social-proof-group">
+                <h1 class="headline ${screen.headlineSize || "size-40"}">${lineBreaks(screen.headline)}</h1>
+                <div class="review-stack">
+                  ${(screen.reviews || [])
+                    .map((review) => {
+                      const emphasis = review.emphasis || "";
+                      const remainder = String(review.quote || "").startsWith(emphasis)
+                        ? String(review.quote || "").slice(emphasis.length)
+                        : String(review.quote || "");
+                      return `
+                        <article class="review-card">
+                          <p class="review-quote">“<span class="review-highlight">${escapeHtml(emphasis)}</span>${escapeHtml(remainder)}”</p>
+                          <p class="review-attribution">— ${escapeHtml(review.attribution)}</p>
+                        </article>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              </div>
+            </div>
+            ${buttonMarkup(screen.button)}
+          </section>
+        `;
+      }
+
       function resolvedScreen() {
         const screen = flow.screens[active];
         if (!screen) return null;
@@ -837,6 +947,7 @@
         if (screen.type === "artCopy") return renderArtCopy(screen);
         if (screen.type === "videoCopy") return renderVideoCopy(screen);
         if (screen.type === "benefit") return renderBenefit(screen);
+        if (screen.type === "reviews") return renderReviews(screen);
         return renderCopy(screen);
       }
 

@@ -173,6 +173,53 @@
         color: var(--dark);
       }
 
+      .social-proof-content {
+        justify-content: flex-start;
+        overflow: auto;
+        padding: 18px 0;
+      }
+
+      .social-proof-group {
+        margin: auto 0;
+      }
+
+      .social-proof .headline {
+        font-size: 40px;
+      }
+
+      .review-stack {
+        display: grid;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .review-card {
+        border-radius: 30px;
+        background: #fff;
+        padding: 16px 20px 18px;
+      }
+
+      .review-quote,
+      .review-attribution {
+        margin: 0;
+        color: var(--dark);
+        font: 800 16px/1.28 "Public Sans", sans-serif;
+      }
+
+      .review-highlight {
+        color: var(--blue);
+      }
+
+      .review-attribution {
+        margin-top: 10px;
+        text-align: right;
+      }
+
+      .social-proof .primary-button {
+        width: 92%;
+        margin: 0 auto;
+      }
+
       .primary-button {
         width: 100%;
         min-height: 56px;
@@ -382,7 +429,7 @@
     <a class="overview-link" href="index.html">See interactive</a>
     <main class="board" data-board></main>
 
-    <script src="flow-data.js?v=20260730-copy-update"></script>
+    <script src="flow-data.js?v=20260802-social-proof"></script>
     <script>
       const flow = window.SEE_ONBOARDING_FLOW;
       const board = document.querySelector("[data-board]");
@@ -579,6 +626,35 @@
         `;
       }
 
+      function renderReviews(screen) {
+        return `
+          <section class="screen social-proof">
+            <div class="content-center social-proof-content">
+              <div class="social-proof-group">
+                <h1 class="headline ${screen.headlineSize || "size-40"}">${lineBreaks(screen.headline)}</h1>
+                <div class="review-stack">
+                  ${(screen.reviews || [])
+                    .map((review) => {
+                      const emphasis = review.emphasis || "";
+                      const remainder = String(review.quote || "").startsWith(emphasis)
+                        ? String(review.quote || "").slice(emphasis.length)
+                        : String(review.quote || "");
+                      return `
+                        <article class="review-card">
+                          <p class="review-quote">“<span class="review-highlight">${escapeHtml(emphasis)}</span>${escapeHtml(remainder)}”</p>
+                          <p class="review-attribution">— ${escapeHtml(review.attribution)}</p>
+                        </article>
+                      `;
+                    })
+                    .join("")}
+                </div>
+              </div>
+            </div>
+            ${button(screen.button)}
+          </section>
+        `;
+      }
+
       function renderScreen(screenName) {
         const screen = flow.screens[screenName];
         if (!screen) return "";
@@ -590,6 +666,7 @@
         if (screen.type === "artCopy") return renderArtCopy(screen);
         if (screen.type === "videoCopy") return renderVideoCopy(screen);
         if (screen.type === "benefit") return renderBenefit(screen);
+        if (screen.type === "reviews") return renderReviews(screen);
         return renderCopy(screen);
       }
 
