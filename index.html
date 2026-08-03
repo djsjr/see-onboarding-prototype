@@ -169,35 +169,88 @@
 
       .social-proof-content {
         justify-content: flex-start;
-        overflow: auto;
-        padding: 18px 0;
+        overflow-y: auto;
+        padding: calc(env(safe-area-inset-top, 0px) + 28px) 24px
+          calc(env(safe-area-inset-bottom, 0px) + 96px);
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .social-proof-back {
+        position: static;
+        margin: 0 0 6px;
+      }
+
+      .screen.social-proof {
+        padding: 0;
       }
 
       .social-proof-group {
-        margin: auto 0;
+        margin: 0;
       }
 
-      .social-proof .headline {
-        font-size: 40px;
+      .social-proof-subhead {
+        margin: 14px 0 0;
+        color: var(--blue);
+        font: 800 24px/1.15 "Public Sans", sans-serif;
       }
 
       .review-stack {
         display: grid;
         gap: 14px;
-        margin-top: 20px;
+        margin-top: 22px;
       }
 
       .review-card {
+        position: relative;
+        overflow: hidden;
         border-radius: 30px;
         background: #fff;
-        padding: 16px 20px 18px;
+        padding: 16px 20px 16px 54px;
+        box-shadow: 0 5px 14px rgba(37, 35, 35, 0.1);
       }
 
-      .review-quote,
-      .review-attribution {
+      .review-card.featured {
+        display: flex;
+        flex-direction: column;
+        border-left: 5px solid var(--blue);
+        min-height: 270px;
+        padding: 76px 24px 28px 36px;
+      }
+
+      .review-mark {
+        position: absolute;
+        top: 9px;
+        left: 16px;
+        color: rgba(49, 87, 201, 0.14);
+        font: 800 56px/0.85 "Public Sans", sans-serif;
+        pointer-events: none;
+      }
+
+      .review-card.featured .review-mark {
+        top: 20px;
+        left: 30px;
+        color: rgba(49, 87, 201, 0.3);
+        font-size: 90px;
+      }
+
+      .review-quote {
         margin: 0;
         color: var(--dark);
-        font: 800 16px/1.28 "Public Sans", sans-serif;
+        font: 800 15px/1.28 "Public Sans", sans-serif;
+      }
+
+      .review-attribution-name {
+        margin: 0;
+        color: var(--dark);
+        font: 800 15px/1.2 "Public Sans", sans-serif;
+      }
+
+      .review-card.featured .review-quote {
+        font-size: 26px;
+      }
+
+      .review-card.featured .review-attribution-name {
+        font-size: 20px;
       }
 
       .review-highlight {
@@ -205,13 +258,33 @@
       }
 
       .review-attribution {
-        margin-top: 10px;
+        margin-top: 8px;
         text-align: right;
       }
 
+      .review-card.featured .review-attribution {
+        margin-top: auto;
+        padding-top: 6px;
+      }
+
+      .review-attribution-location {
+        margin: 2px 0 0;
+        color: rgba(37, 35, 35, 0.58);
+        font: 800 12px/1.15 "Public Sans", sans-serif;
+      }
+
+      .review-card.featured .review-attribution-location {
+        font-size: 15px;
+      }
+
       .social-proof .primary-button {
+        position: absolute;
+        z-index: 2;
+        left: 50%;
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
         width: 92%;
-        margin: 0 auto;
+        margin: 0;
+        transform: translateX(-50%);
       }
 
       .primary-button {
@@ -330,6 +403,14 @@
 
       .screen[data-screen="simplestMeditation"] .headline + .body {
         margin-top: 28px;
+      }
+
+      .screen[data-screen="simplestMeditation"] .art {
+        margin-bottom: 12px;
+      }
+
+      .screen[data-screen="simplestMeditation"] .art + .body {
+        margin-top: 0;
       }
 
       .screen[data-screen="simplestMeditation"] .body:first-of-type {
@@ -894,18 +975,29 @@
           <section class="screen social-proof is-active" data-screen="${active}">
             <div class="content-center social-proof-content">
               <div class="social-proof-group">
-                <h1 class="headline ${screen.headlineSize || "size-40"}">${lineBreaks(screen.headline)}</h1>
+                <button class="back-arrow social-proof-back${historyStack.length > 0 || cameFromOverview ? " is-visible" : ""}" type="button" aria-label="Go back" data-review-back>‹</button>
+                <h1 class="headline ${screen.headlineSize || ""}">${lineBreaks(screen.headline)}</h1>
+                ${screen.subhead ? `<p class="social-proof-subhead">${lineBreaks(screen.subhead)}</p>` : ""}
                 <div class="review-stack">
                   ${(screen.reviews || [])
                     .map((review) => {
+                      const quote = String(review.quote || "");
                       const emphasis = review.emphasis || "";
-                      const remainder = String(review.quote || "").startsWith(emphasis)
-                        ? String(review.quote || "").slice(emphasis.length)
-                        : String(review.quote || "");
+                      const emphasisStart = emphasis ? quote.indexOf(emphasis) : -1;
+                      const beforeEmphasis = emphasisStart >= 0 ? quote.slice(0, emphasisStart) : quote;
+                      const highlighted = emphasisStart >= 0 ? emphasis : "";
+                      const afterEmphasis = emphasisStart >= 0 ? quote.slice(emphasisStart + emphasis.length) : "";
+                      const attributionParts = String(review.attribution || "").split(",");
+                      const reviewerName = attributionParts.shift().trim();
+                      const reviewerLocation = attributionParts.join(",").trim();
                       return `
-                        <article class="review-card">
-                          <p class="review-quote">“<span class="review-highlight">${escapeHtml(emphasis)}</span>${escapeHtml(remainder)}”</p>
-                          <p class="review-attribution">— ${escapeHtml(review.attribution)}</p>
+                        <article class="review-card${review.featured ? " featured" : ""}">
+                          <span class="review-mark" aria-hidden="true">“</span>
+                          <p class="review-quote">${review.featured ? "" : "“"}${escapeHtml(beforeEmphasis)}<span class="review-highlight">${escapeHtml(highlighted)}</span>${escapeHtml(afterEmphasis)}”</p>
+                          <div class="review-attribution">
+                            <p class="review-attribution-name">${escapeHtml(reviewerName)}</p>
+                            ${reviewerLocation ? `<p class="review-attribution-location">${escapeHtml(reviewerLocation)}</p>` : ""}
+                          </div>
                         </article>
                       `;
                     })
@@ -1026,7 +1118,9 @@
 
       function draw() {
         host.innerHTML = renderScreen();
-        backArrow.classList.toggle("is-visible", historyStack.length > 0);
+        backArrow.classList.toggle("is-visible", active !== "socialProof" && historyStack.length > 0);
+
+        host.querySelector("[data-review-back]")?.addEventListener("click", handleBack);
 
         host.querySelectorAll("[data-goal]").forEach((button) => {
           button.addEventListener("click", () => {
@@ -1087,7 +1181,7 @@
         host.querySelector("[data-continue]")?.addEventListener("click", continueFromCurrent);
       }
 
-      backArrow.addEventListener("click", () => {
+      function handleBack() {
         const previous = historyStack.pop();
         if (!previous && cameFromOverview) {
           window.location.href = "overview.html";
@@ -1096,7 +1190,9 @@
         if (!previous) return;
         active = previous;
         draw();
-      });
+      }
+
+      backArrow.addEventListener("click", handleBack);
 
       preloadFlowImages();
       draw();

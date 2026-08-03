@@ -363,9 +363,7 @@ window.SEE_ONBOARDING_FLOW = (() => {
       "type": "copy",
       "headline": "The Simplest, Most Effective Meditation on Earth.",
       "imageKey": "meditatingHands",
-      "imageScale": 0.7,
-      "imageAfterBodyIndex": 0,
-      "imageAfterSpacing": 10,
+      "imageScale": 0.8,
       "body": [
         "10 minutes. Twice a day.",
         "No mantras. No hypnosis. No breathwork. No mood music or sound effects. Nothing to learn. Just to see."
@@ -413,23 +411,67 @@ window.SEE_ONBOARDING_FLOW = (() => {
     "socialProof": {
       "page": "23.1",
       "type": "reviews",
-      "headline": "Don’t just take\nour word for it...",
-      "headlineSize": "size-40",
+      "headline": "Don’t just take\nour word for it...",
+      "subhead": "Take it from real people\nwho’ve been there.",
       "reviews": [
         {
           "quote": "I forgot I even wanted to drink. That never happened before.",
           "emphasis": "I forgot I even wanted to drink.",
-          "attribution": "Kimi, London, Ohio"
+          "attribution": "Kimi, London, Ohio",
+          "featured": true
+        },
+        {
+          "quote": "It literally saved my life. I absolutely love the app. It never gets monotonous.",
+          "emphasis": "It literally saved my life.",
+          "attribution": "Si, England"
         },
         {
           "quote": "This app made quitting easier. I’m more awake, aware, and clear-headed than ever.",
           "emphasis": "This app made quitting easier.",
-          "attribution": "Matt, Bremen, Germany"
+          "attribution": "Matt, Bremen, Germany",
+          "featured": true
+        },
+        {
+          "quote": "I could never meditate before. This is working. My partner, boss, colleagues, and friends have noticed a difference too.",
+          "emphasis": "This is working.",
+          "attribution": "Mairi Anna, Edinburgh, Scotland"
+        },
+        {
+          "quote": "The benefits—too numerous and some too private to mention—just keep on coming.",
+          "emphasis": "just keep on coming.",
+          "attribution": "Mark, New South Wales, Australia"
+        },
+        {
+          "quote": "It’s changed everything. What has changed is how I perceive everything.",
+          "emphasis": "It’s changed everything.",
+          "attribution": "Scott, Chonburi, Thailand",
+          "featured": true
+        },
+        {
+          "quote": "The effect was immediate. It was just what I needed to snap out of years of self-pity, regret, and resentment.",
+          "emphasis": "The effect was immediate.",
+          "attribution": "Bobby, North Kingstown, Rhode Island"
+        },
+        {
+          "quote": "Amazing. It’s life-changing. Thank you for everything you do.",
+          "emphasis": "It’s life-changing.",
+          "attribution": "Sharon, Suffolk, England"
+        },
+        {
+          "quote": "Meditation has changed my life. It works, and it is a godsend. Thank you! I am free and recovered!",
+          "emphasis": "I am free and recovered!",
+          "attribution": "Jeanne Marie, Rockland, New York",
+          "featured": true
         },
         {
           "quote": "Since I stopped drinking, my mood lifted. I’m healthier and happier. This is the real deal.",
-          "emphasis": "Since I stopped drinking, my mood lifted.",
+          "emphasis": "This is the real deal.",
           "attribution": "Lindy, Menominee, Michigan"
+        },
+        {
+          "quote": "Amazing! I am a clinical psychologist. My life changed drastically when I really committed to meditation.",
+          "emphasis": "My life changed drastically",
+          "attribution": "Barbara, Antigua, Guatemala"
         }
       ],
       "button": "Continue"
